@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Queue{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script> setInterval(function(){
+        $.ajax({
+        type: "GET",
+        url: "http://192.168.0.229:5000/values", 
+        success: function(data) {
+            var event_data = '';
+            $.each(data.users, function(index, value){
+                /console.log(value);/
+                event_data += '<tr>';
+                event_data += '<td>'+value+'</td>';
+                event_data += '<td>'+data.time[index]+'</td>';
+                event_data += '</tr>';
+            });
+            $("#list_table_json").empty();
+            $("#list_table_json").append(event_data);
+        }
+    });
+    }, 1000); //Ververs pagina elke 1 seconden
+    </script>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-responsive table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Join time</th>
+            </tr>
+        </thead>
+        <tbody id="list_table_json">
+            
+        </tbody>
+    </table>
+{% endblock %}
