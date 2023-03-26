@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import numpy as np
 from queue_list import add_queue
-<<<<<<< HEAD
-=======
 from write_json import write
 from flask_bootstrap import Bootstrap
->>>>>>> f3fdd4032ebd9f3e692863af78a5bb44b6c43c0d
 
 app = Flask(__name__)
 Bootstrap(app)
