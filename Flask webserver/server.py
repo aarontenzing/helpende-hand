@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import numpy as np
 from queue_list import add_queue
-from write_json import write
+from read_json import tijden
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
@@ -10,6 +10,7 @@ app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
 
 user_list = []
 time_list = []
+waitlist= []
 
 @app.route("/")
 def home():
@@ -39,6 +40,15 @@ def create_class():
         return jsonify()
     else:
         return render_template("class_form.html")
+    
+@app.route("/stats",methods=["GET"])
+def stats():
+    if request.method == "GET":
+        waitlist=tijden()
+        print(waitlist)
+        return render_template("statistieken.html",waitlist=waitlist)
+    else:
+        return "Nothing"
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
