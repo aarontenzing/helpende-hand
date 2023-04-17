@@ -3,21 +3,21 @@
 
 const char* ssid = "servertje";
 const char* password = "ditismijnservertje";
-const char* serverUrl = "http://10.67.128.154:5000/queue";
+const char* serverUrl = "http://10.67.128.26:5000/queue";
 const int cid = 8;
+const int AANT_SEC = 2;
 
-const int buttonPin = 0; // GPIO0
+const int buttonPin = 1; // GPIO0
 const int ledPin = 2; // GPIO2
 
 int ButtonState = HIGH;
-int ledState = HIGH;
+int ledState = LOW;
 
 void setup() {
 
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(ledPin, OUTPUT);
-
-  Serial.begin(115200);
+  digitalWrite(ledPin, ledState);
 
   WiFi.begin(ssid, password);
 
@@ -43,6 +43,7 @@ void loop() {
           }
           Serial.println("Button released!");
           sendData();
+          digitalWrite(ledPin, LOW);
       }
   }
 
@@ -61,14 +62,22 @@ void sendData() {
     
     if (responseCode > 0) {
       digitalWrite(ledPin, !ledState);
+      ledState = !ledState;
       Serial.print("HTTP Response code: ");
       Serial.println(responseCode);
     }
     else 
     {
+      for(int i = 0; i < AANT_SEC; i++) {
+        digitalWrite(ledPin, HIGH);
+        delay(500);
+        digitalWrite(ledPin, LOW);
+        delay(500);
+      }
+    
       Serial.print("Error code: ");
       Serial.println(responseCode);
     }
-    http.end(); // beëindig de HTTP-verbinding
+    http.end(); // beëindig de HTTP-verbinding  
 }
 
