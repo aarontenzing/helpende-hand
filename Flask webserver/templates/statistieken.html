@@ -1,0 +1,54 @@
+
+
+{% extends "base.html" %}
+{% block title %}Statistieken{% endblock %}
+
+
+{% block scripts %}
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+<script>
+  var waitlist = JSON.parse('{{ waitlist | tojson | safe }}');
+  //xyValues = JSON.load(xyValues);
+  var xyValues = [];
+  console.log(waitlist);
+  for(var i=0;i<waitlist.length;i++){
+    xyValues.push({x: waitlist[i].cid , y: waitlist[i].time});
+  }
+  //xyValues = [{x:1,y:1},{x:50,y:500}];
+  console.log(xyValues);
+
+    new Chart("myChart", {
+      type: "scatter",
+      data: {
+        datasets: [{
+          pointRadius: 4,
+          pointBackgroundColor: "rgb(0,0,255)",
+          data: xyValues
+          //data: waitlist
+        }]
+      },
+      options: {
+        legend: {display: false},
+        scales: {
+          
+          xAxes: [{ticks: {min: 0, max:20}}],
+          yAxes: [{ticks: {min: 0, max:2500}}],
+          
+        }
+      }
+    });
+    </script> 
+
+{% endblock %}
