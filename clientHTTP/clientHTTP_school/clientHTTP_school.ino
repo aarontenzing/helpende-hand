@@ -38,10 +38,11 @@ void loop() {
       if(!digitalRead(buttonPin)) {
           Serial.println("Button pressed!");
           sendData();
-          digitalWrite(ledPin, !ledState);
           while(!digitalRead(buttonPin)) {
               delay(5);
           }
+          Serial.println("Button released!");
+          sendData();
       }
   }
 
@@ -59,6 +60,7 @@ void sendData() {
     int responseCode = http.POST(postData);
     
     if (responseCode > 0) {
+      digitalWrite(ledPin, !ledState);
       Serial.print("HTTP Response code: ");
       Serial.println(responseCode);
     }
