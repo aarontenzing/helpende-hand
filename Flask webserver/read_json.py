@@ -2,7 +2,7 @@ import json
 
 def tijden():
     
-    json_data=open('/home/jonas/Documents/KUL/Project/project3/Flask webserver/log.json')
+    json_data=open('Flask webserver\log.json')
 
     # EERST DE LIJST ORDENEN
 
