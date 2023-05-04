@@ -3,66 +3,69 @@
 
 const char* ssid = "servertje";
 const char* password = "ditismijnservertje";
-const char* serverUrl = "http://10.67.128.61:5000/queue";
+const char* serverUrl = "http://10.67.128.32:5000/queue";
 
 const int cid = 1;
 const int AANT_SEC = 2;
 
 const int buttonPin = 1; // TX 
-//const int buttonEn = 0; // GPIO0
+const int buttonEn = 0; // GPIO0
 const int ledPin = 2; // GPIO2
 
-int ButtonState = HIGH;
-
 void setup() {
-  Serial.begin(9600);
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(ledPin, OUTPUT);
-  //pinMode(buttonEn, OUTPUT);
+  pinMode(buttonEn, OUTPUT);
+
   digitalWrite(ledPin, LOW);
-  //digitalWrite(buttonEn, LOW);
+  digitalWrite(buttonEn, LOW);
 
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     error_blink();
   }
-  
-  Serial.print("Connected! IP address: ");
-  Serial.println(WiFi.localIP());
 }
 
 void loop() {
 
+  if (WiFi.status() == WL_CONNECTED) {
   // Status van de knop  
-  if(!digitalRead(buttonPin)) {
-      delay(5);
-      if(!digitalRead(buttonPin)) {
-          sendData();
-          while(!digitalRead(buttonPin)) {
-              delay(5);
-          }
-          sendData();
-          digitalWrite(ledPin, LOW);
-      }
+    if(!digitalRead(buttonPin)) {
+        delay(5);
+        if(!digitalRead(buttonPin)) {
+            sendData(1);
+            while(!digitalRead(buttonPin)) {
+                delay(5);
+            }
+            sendData(2);
+            digitalWrite(ledPin, LOW);
+        }
+    }
   }
-
+  else {
+    error_blink();
+  }
 }
 
-void sendData() {
+void sendData(int type) {
 
-   // create a HTTP client object
+    // create a HTTP client object
     HTTPClient http;
     WiFiClient client;
 
     String postData = "cid=" + String(cid);
     http.begin(client,serverUrl); // maak verbinding met server
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    int responseCode = http.POST(postData);
-    Serial.println(responseCode);
+    int httpCode = http.POST(postData);
     
-    if (responseCode > 0) {
-      digitalWrite(ledPin, HIGH);
+    if (httpCode == 200 || httpCode == -11) {
+      if (type == 1) {
+        digitalWrite(ledPin, HIGH);
+      }
+      if (type == 2) {
+        digitalWrite(ledPin, LOW);
+      }
     }
     else 
     {
@@ -72,12 +75,11 @@ void sendData() {
 }
 
 void error_blink() {
-
   for(int i = 0; i < AANT_SEC; i++) {
-        digitalWrite(ledPin, HIGH);
-        delay(500);
-        digitalWrite(ledPin, LOW);
-        delay(500);
-      }
+      digitalWrite(ledPin, HIGH);
+      delay(500);
+      digitalWrite(ledPin, LOW);
+      delay(500);
+  }
 }
 
