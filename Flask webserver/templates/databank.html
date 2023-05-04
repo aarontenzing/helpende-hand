@@ -6,9 +6,29 @@
         <h1>Studenten</h1>
         <br/>
         <form action="/databank" METHOD="POST">
-            <input type="text" placeholder="Name" name="name">
-            <input type="submit" value="Add Name" class="btn btn-secondary">
 
+            <select>
+                <option>Kies een vak</option>
+                <optgroup label="2e Bachelor">
+                    <option>Computerarchitecturen</option>
+                    <option>Ingenieursbeleving 2</option>
+                </optgroup>
+                <optgroup label="3e Bachelor">
+                    <option>Sensoren en Actuatoren</option>
+                    <option>Ingenieursbeleving 3</option>
+                </optgroup>
+            </select>
+        </br></br>
+
+            <tr>
+                <td>
+                    <input type="text" placeholder="Name" name="name">
+                </td>
+                
+                <td>               
+                    <input type="submit" value="Add Student" class="btn btn-secondary">
+                </td>
+            </tr>
         </form>
   
     <br/><br/>

@@ -19,7 +19,7 @@ db.init_app(app)
 
 class  Klas(db.Model):
     cid = db.Column(db.Integer,primary_key=True,autoincrement=True)
-    vak = db.Column(db.String(200),nullable=True)
+    vak = db.Column(db.String(200),nullable=False)
     name = db.Column(db.String(200),nullable=False)
 
     def __repr__(self):

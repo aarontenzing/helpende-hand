@@ -15,17 +15,20 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 
 
 {% block content %}
-
-<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-
 <script>
   var waitlist = JSON.parse('{{ waitlist | tojson | safe }}');
   //xyValues = JSON.load(xyValues);
   console.log(waitlist)
-  if (waitlist === null || waitlist.length == 0) {
+  if (waitlist == null || waitlist.length == 0) {
     // array does not exist or is empty
-    document.write("<h2>Nog aan het verwerken...</h2>")
-  }else{
+    document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>")
+  }
+</script>
+<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+<script>
+  
+  if (waitlist != null || waitlist.length != 0) {
   var xyValues = [];
   console.log(waitlist);
   for(var i=0;i<waitlist.length;i++){
