@@ -50,33 +50,28 @@ void loop() {
 }
 
 void sendData() {
-
+    digitalWrite(ledPin, !digitalRead(buttonPin));
     // create a HTTP client object
     HTTPClient http;
     WiFiClient client;
-
     String postData = "cid=" + String(cid) + "&button=" + String(!digitalRead(buttonPin));
     http.begin(client,serverUrl); // maak verbinding met server
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-    digitalWrite(ledPin, !digitalRead(buttonPin));
 
     int httpCode = http.POST(postData);
     
     if (httpCode < 0) {
       error_blink();  
     }
+
     http.end(); // beëindig de HTTP-verbinding  
 }
 
 void error_blink() {
-
   for(int i = 0; i < AANT_SEC; i++) {
       digitalWrite(ledPin, HIGH);
       delay(500);
       digitalWrite(ledPin, LOW);
       delay(500);
   }
-
 }
-
