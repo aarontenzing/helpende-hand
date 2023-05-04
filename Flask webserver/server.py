@@ -1,13 +1,33 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import numpy as np
 from queue_list import add_queue
 from read_json import tijden
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
+#Initialize database
+db = SQLAlchemy()
 
 app = Flask(__name__)
 Bootstrap(app)
 app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///klas.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+db.init_app(app)
+
+class  Klas(db.Model):
+    cid = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    vak = db.Column(db.String(200),nullable=True)
+    name = db.Column(db.String(200),nullable=False)
+
+    def __repr__(self):
+        return '<Name %r>' % self.cid 
+
+with app.app_context():
+    db.create_all()
+ 
 user_list = []
 time_list = []
 waitlist= []
@@ -49,6 +69,24 @@ def stats():
         return render_template("statistieken.html",waitlist=waitlist)
     else:
         return "Nothing"
+    
+@app.route("/databank",methods=["POST","GET"])
+def databank():
+    klaslijst = "Lijst met Studentnamen"
+
+    if request.method == "POST":
+        
+        new_student = Klas(name=request.form['name'])
+        # Push to Database
+        #try:
+        db.session.add(new_student)
+        db.session.commit()
+        return redirect(url_for('databank'))
+        #except:
+         #   return "Error adding student"
+    else:
+        studenten = db.session.execute(db.select(Klas).order_by(Klas.name)).scalars()
+        return render_template("databank.html",title=klaslijst,klas=studenten)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

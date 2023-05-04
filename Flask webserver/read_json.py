@@ -1,8 +1,12 @@
 import json
+import os
 
 def tijden():
+
+    if os.stat('Flask webserver/log.json').st_size == 0:
+        return
     
-    json_data=open('Flask webserver\log.json')
+    json_data=open('Flask webserver/log.json')
 
     # EERST DE LIJST ORDENEN
 
@@ -13,6 +17,7 @@ def tijden():
     leftlist=[]
     timelist=[]
 
+    #TIJD IN SECONDEN OMZETTEN
     for i in range(len(data)):
 
         timelist=data[i]['time'].split(":")
