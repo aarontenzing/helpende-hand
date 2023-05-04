@@ -6,7 +6,7 @@
     <script> setInterval(function(){
         $.ajax({
         type: "GET",
-        url: "http://10.67.128.26:5000/values", 
+        url: "http://192.168.0.240:5000/values", 
         success: function(data) {
             var event_data = '';
             $.each(data.users, function(index, value){

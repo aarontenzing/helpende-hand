@@ -3,10 +3,10 @@ import os
 
 def tijden():
 
-    if os.stat('Flask webserver/log.json').st_size == 0:
+    if os.stat('log.json').st_size == 0:
         return
     
-    json_data=open('Flask webserver/log.json')
+    json_data=open('log.json')
 
     # EERST DE LIJST ORDENEN
 
@@ -55,6 +55,7 @@ def tijden():
         print(leftlist[i]['cid'])
     """
     waitlist=[]
+    print(len(leftlist), leftlist)
 
 
     for i in range(len(joinlist)):
@@ -86,6 +87,3 @@ def tijden():
         print(waitlist[i]['cid'],waitlist[i]['time'],'seconden')
 
     return waitlist
-
-
-#print(tijden())

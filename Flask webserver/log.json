@@ -1,62 +1,197 @@
 [
     {
-        "cid": "2",
-        "time": "19:05:32",
-        "entry": "joined"
-    },
-    {
-        "cid": "3",
-        "time": "19:05:39",
-        "entry": "joined"
-    },
-    {
-        "cid": "4",
-        "time": "19:05:42",
+        "cid": "1",
+        "time": "12:02:38",
         "entry": "joined"
     },
     {
         "cid": "1",
-        "time": "19:05:46",
-        "entry": "joined"
-    },
-    {
-        "cid": "1",
-        "time": "19:05:48",
-        "entry": "left"
-    },
-    {
-        "cid": "4",
-        "time": "19:06:03",
-        "entry": "left"
-    },
-    {
-        "cid": "4",
-        "time": "19:26:24",
-        "entry": "joined"
-    },
-    {
-        "cid": "3",
-        "time": "19:26:30",
-        "entry": "joined"
-    },
-    {
-        "cid": "3",
-        "time": "19:26:34",
-        "entry": "left"
-    },
-    {
-        "cid": "4",
-        "time": "19:26:37",
+        "time": "12:02:49",
         "entry": "left"
     },
     {
         "cid": "1",
-        "time": "19:26:42",
+        "time": "12:03:00",
         "entry": "joined"
     },
     {
         "cid": "1",
-        "time": "20:06:16",
+        "time": "12:03:12",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:03:29",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:03:36",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:05:11",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:05:25",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:05:27",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:05:29",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:05:32",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:05:37",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:06:38",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:06:42",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:07:00",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:08:27",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:08:42",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:08:47",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:08:57",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:09:01",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:09:10",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:09:12",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "12:15:00",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:15:41",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "12:16:13",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "18:09:32",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "18:12:24",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "18:12:33",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "18:12:39",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "18:14:53",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "18:20:56",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "18:20:59",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "18:21:01",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "18:21:03",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "18:21:04",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "18:21:07",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "18:21:08",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "18:21:11",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "18:21:12",
         "entry": "left"
     }
 ]

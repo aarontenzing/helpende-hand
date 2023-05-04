@@ -3,16 +3,18 @@
 
 const char* ssid = "servertje";
 const char* password = "ditismijnservertje";
-const char* serverUrl = "http://10.67.128.32:5000/queue";
+const char* serverUrl = "http://192.168.0.240:5000/queue";
 
 const int cid = 1;
 const int AANT_SEC = 2;
+const int RESEND = 4;
 
 const int buttonPin = 1; // TX 
 const int buttonEn = 0; // GPIO0
 const int ledPin = 2; // GPIO2
 
 void setup() {
+
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(ledPin, OUTPUT);
   pinMode(buttonEn, OUTPUT);
@@ -34,12 +36,11 @@ void loop() {
     if(!digitalRead(buttonPin)) {
         delay(5);
         if(!digitalRead(buttonPin)) {
-            sendData(1);
+            sendData();
             while(!digitalRead(buttonPin)) {
                 delay(5);
             }
-            sendData(2);
-            digitalWrite(ledPin, LOW);
+            sendData();
         }
     }
   }
@@ -48,38 +49,34 @@ void loop() {
   }
 }
 
-void sendData(int type) {
+void sendData() {
 
     // create a HTTP client object
     HTTPClient http;
     WiFiClient client;
 
-    String postData = "cid=" + String(cid);
+    String postData = "cid=" + String(cid) + "&button=" + String(!digitalRead(buttonPin));
     http.begin(client,serverUrl); // maak verbinding met server
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    digitalWrite(ledPin, !digitalRead(buttonPin));
+
     int httpCode = http.POST(postData);
     
-    if (httpCode == 200 || httpCode == -11) {
-      if (type == 1) {
-        digitalWrite(ledPin, HIGH);
-      }
-      if (type == 2) {
-        digitalWrite(ledPin, LOW);
-      }
-    }
-    else 
-    {
-      error_blink();   
+    if (httpCode < 0) {
+      error_blink();  
     }
     http.end(); // beëindig de HTTP-verbinding  
 }
 
 void error_blink() {
+
   for(int i = 0; i < AANT_SEC; i++) {
       digitalWrite(ledPin, HIGH);
       delay(500);
       digitalWrite(ledPin, LOW);
       delay(500);
   }
+
 }
 

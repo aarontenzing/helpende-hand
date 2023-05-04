@@ -40,10 +40,12 @@ def home():
 def queue():
     if request.method == "POST":
         cid = request.form["cid"]
+        pressed = int(request.form["button"])
         print(user_list)
-        add_queue(cid, user_list, time_list)
+        add_queue(cid, pressed, user_list, time_list)
         return "succes"
     else:
+        print(user_list)
         return render_template('queue.html')
     
 @app.route("/values", methods=["GET"])
