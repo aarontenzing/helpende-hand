@@ -19,8 +19,8 @@ db.init_app(app)
 
 class  Klas(db.Model):
     cid = db.Column(db.Integer,primary_key=True,autoincrement=True)
-    vak = db.Column(db.String(200),nullable=False)
-    name = db.Column(db.String(200),nullable=False)
+    vak = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.String(200), nullable=False)
 
     def __repr__(self):
         return '<Name %r>' % self.cid 
@@ -32,6 +32,8 @@ user_list = []
 time_list = []
 waitlist= []
 
+select = ""
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -41,11 +43,10 @@ def queue():
     if request.method == "POST":
         cid = request.form["cid"]
         pressed = int(request.form["button"])
-        print(user_list)
+        print(cid)
         add_queue(cid, pressed, user_list, time_list)
         return "succes"
     else:
-        print(user_list)
         return render_template('queue.html')
     
 @app.route("/values", methods=["GET"])
@@ -77,8 +78,8 @@ def databank():
     klaslijst = "Lijst met Studentnamen"
 
     if request.method == "POST":
-        
-        new_student = Klas(name=request.form['name'])
+            
+        new_student = Klas(name=request.form['name'], vak = request.form['subject'])
         # Push to Database
         #try:
         db.session.add(new_student)
@@ -86,9 +87,21 @@ def databank():
         return redirect(url_for('databank'))
         #except:
          #   return "Error adding student"
+
     else:
         studenten = db.session.execute(db.select(Klas).order_by(Klas.name)).scalars()
         return render_template("databank.html",title=klaslijst,klas=studenten)
+
+@app.route("/selvak",methods=["POST"])
+def selectvak():
+    if request.method == "POST":
+        try:
+            select = db.session.execute(db.select(Klas).order_by(request.form['vak'])).scalars()  
+        except:
+            print("none")
+            
+        print(select)
+        return render_template('queue.html')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
