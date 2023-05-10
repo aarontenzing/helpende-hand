@@ -6,7 +6,7 @@
     <script> setInterval(function(){
         $.ajax({
         type: "GET",
-        url: "http://192.168.0.229:5000/values", 
+        url: "http://192.168.1.10:5000/values", 
         success: function(data) {
             var event_data = '';
             $.each(data.users, function(index, value){
@@ -48,6 +48,7 @@
     <table class="table table-responsive table-hover table-bordered">
         <thead>
             <tr>
+                <th>Student</th>
                 <th>User ID</th>
                 <th>Join time</th>
             </tr>
