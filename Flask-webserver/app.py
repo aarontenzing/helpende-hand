@@ -32,7 +32,7 @@ user_list = []
 time_list = []
 waitlist= []
 
-select = ""
+filtervak = [""]
 
 @app.route("/")
 def home():
@@ -52,19 +52,15 @@ def queue():
 @app.route("/values", methods=["GET"])
 def get_values():
     if request.method == "GET":
-        #student_name = db.session.execute(db.select(Klas).order_by(Klas.name)).scalars()
+        names = []
+        for i in user_list:
+            names.append(Klas.query.filter_by(cid=i, vak=filtervak[0]).with_entities(Klas.name).scalar())
+        print(names)
         # querying student name from the database, if no entry NULL
-        data = {'users':user_list, 'time':time_list}
+        data = {'users':user_list, 'time':time_list, 'names':names}
         return jsonify(data)
     else:
         return "Not allowed"
-
-@app.route("/class", methods=["POST","GET"])
-def create_class():
-    if request.method == "POST":  
-        return jsonify()
-    else:
-        return render_template("class_form.html")
     
 @app.route("/stats",methods=["GET"])
 def stats():
@@ -97,17 +93,11 @@ def databank():
 @app.route("/selvak",methods=["POST"])
 def selectvak():
     if request.method == "POST":
-        try:
-            select = db.session.execute(db.select(Klas).order_by(request.form['vak'])).scalars()
-            # Not working trying to select class en putting it in global var. (so /value can query right class)
-            # Need to fix when creating table -> different tables for every subject
-        except:
-            print("none")
-            
-            
+        filtervak[0] = str(request.form['vak'])
+        print(filtervak)
+        # Not working trying to select class en putting it in global var. (so /value can query right class)
+        # Need to fix when creating< table -> different tables for every subject
         return render_template('queue.html')
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
-
-
