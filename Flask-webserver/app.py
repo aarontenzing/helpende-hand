@@ -76,16 +76,20 @@ def databank():
     klaslijst = "Lijst met Studentnamen"
 
     if request.method == "POST":
+        if(request.form['subject']!='Kies een vak'):
             
-        new_student = Klas(name=request.form['name'], vak = request.form['subject'])
+            
+            new_student = Klas(name=request.form['name'], vak = request.form['subject'])
         # Push to Database
         #try:
-        db.session.add(new_student)
-        db.session.commit()
-        return redirect(url_for('databank'))
+            db.session.add(new_student)
+            db.session.commit()
+            
         #except:
          #   return "Error adding student"
-
+        else:
+                print("leeg")
+        return redirect(url_for('databank'))
     else:
         studenten = db.session.execute(db.select(Klas).order_by(Klas.name)).scalars()
         return render_template("databank.html",title=klaslijst,klas=studenten)
