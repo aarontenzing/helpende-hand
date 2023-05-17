@@ -97,7 +97,11 @@ def databank():
 @app.route("/selvak",methods=["POST"])
 def selectvak():
     if request.method == "POST":
-        filtervak[0] = str(request.form['vak'])
+        if request.form['vak'] == "Vakken":
+            filtervak[0] = " "
+        else:
+            filtervak[0] = str(request.form['vak'])
+            
         print(filtervak)
         # Not working trying to select class en putting it in global var. (so /value can query right class)
         # Need to fix when creating< table -> different tables for every subject
