@@ -66,10 +66,15 @@ def get_values():
 def stats():
     if request.method == "GET":
         waitlist=tijden()
+        distinct_cid = []
         names = []
-        for i in range(len(waitlist)):
-            names.append(Klas.query.filter_by(cid=i, vak=filtervak[0]).with_entities(Klas.name).scalar())
-        print(waitlist)
+        distinct_cid= list(set(unique['cid'] for unique in waitlist))
+        print("distinct cids: ", distinct_cid)
+        
+        for i in distinct_cid:
+            print("uniek cid: ", i)
+            names.append(Klas.query.filter_by(cid=int(i), vak="SA").with_entities(Klas.name).scalar())
+            print("names: ", names) 
         return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"

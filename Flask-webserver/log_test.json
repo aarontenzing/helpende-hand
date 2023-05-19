@@ -1,0 +1,62 @@
+[
+    {
+        "cid": "2",
+        "time": "19:05:32",
+        "entry": "joined"
+    },
+    {
+        "cid": "3",
+        "time": "19:05:39",
+        "entry": "joined"
+    },
+    {
+        "cid": "4",
+        "time": "19:05:42",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "19:05:46",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "19:05:48",
+        "entry": "left"
+    },
+    {
+        "cid": "4",
+        "time": "19:06:03",
+        "entry": "left"
+    },
+    {
+        "cid": "4",
+        "time": "19:26:24",
+        "entry": "joined"
+    },
+    {
+        "cid": "3",
+        "time": "19:26:30",
+        "entry": "joined"
+    },
+    {
+        "cid": "3",
+        "time": "19:26:34",
+        "entry": "left"
+    },
+    {
+        "cid": "4",
+        "time": "19:26:37",
+        "entry": "left"
+    },
+    {
+        "cid": "1",
+        "time": "19:26:42",
+        "entry": "joined"
+    },
+    {
+        "cid": "1",
+        "time": "20:06:16",
+        "entry": "left"
+    }
+]

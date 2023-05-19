@@ -78,9 +78,10 @@
 if (waitlist == null || waitlist.length == 0) {
     //array does not exist or is empty
     document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>")
-    return;
-  }
-  
+    
+}
+else{
+
   console.log(waitlist);
   for(var i=0;i<waitlist.length;i++){
     cid.push(waitlist[i].cid);
@@ -202,6 +203,8 @@ for (var i = 0; i < names.length; i++) {
 
   var maxResCell = row.insertCell();
   maxResCell.textContent = vragen[i];
+}
+
 }
 </script>
 
