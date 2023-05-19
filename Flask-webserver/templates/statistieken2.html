@@ -55,7 +55,7 @@
 
 <script>
   var waitlist = JSON.parse('{{ waitlist | tojson | safe }}');
-  var names = [];
+  var names = JSON.parse('{{ names | tojson | safe }}');
   var cid = [];
   var stack = [];
   var datasets = [];
@@ -75,14 +75,13 @@
   'rgba(128, 128, 128, 0.2)'
 ];
 
-//if (waitlist == null || waitlist.length == 0) {
-    // array does not exist or is empty
-    //document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>")
-  //}
-
-  waitlist.push({cid:'2',time:'600'},{cid:'2',time:'720'},{cid:'3',time:'60'},{cid:'1',time:'120'},{cid:'1',time:'60'})
-  names.push('Jef','Aaron','Jonas','Arthur');
-  //console.log(waitlist);
+if (waitlist == null || waitlist.length == 0) {
+    //array does not exist or is empty
+    document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>")
+    return;
+  }
+  
+  console.log(waitlist);
   for(var i=0;i<waitlist.length;i++){
     cid.push(waitlist[i].cid);
   }

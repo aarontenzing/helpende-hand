@@ -66,8 +66,11 @@ def get_values():
 def stats():
     if request.method == "GET":
         waitlist=tijden()
+        names = []
+        for i in range(len(waitlist)):
+            names.append(Klas.query.filter_by(cid=i, vak=filtervak[0]).with_entities(Klas.name).scalar())
         print(waitlist)
-        return render_template("statistieken2.html",waitlist=waitlist)
+        return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"
     
