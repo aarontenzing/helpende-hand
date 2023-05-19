@@ -3,10 +3,10 @@ import os
 
 def tijden():
 
-    if os.stat('log_orgineel.json').st_size == 0:
+    if os.stat('log.json').st_size == 0:
         return
     
-    json_data=open('log_orgineel.json')
+    json_data=open('log.json')
 
     # EERST DE LIJST ORDENEN
 

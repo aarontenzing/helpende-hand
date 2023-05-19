@@ -18,4 +18,5 @@ def add_queue(cid, pressed, user_list, time_list):
                 playsound("leave.mp3")
                 write({'cid':cid, 'time': strftime("%H:%M:%S"),'entry':'left'}, 'log.json')
                 return user_list, time_list
-
+    else:
+        return "queuelist error"
