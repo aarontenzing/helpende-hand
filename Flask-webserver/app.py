@@ -75,6 +75,7 @@ def stats():
             print("uniek cid: ", i)
             names.append(Klas.query.filter_by(cid=int(i), vak="SA").with_entities(Klas.name).scalar())
             print("names: ", names) 
+        print("finaal_names: ", names) 
         return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"
