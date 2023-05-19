@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block title %}Statistieken{% endblock %}
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %}
+
+
+{% block content %}
+<div>
+  <canvas id="myChart"></canvas>
+</div>
+
+<div class="table-container">
+  <table id="mean-table">
+    <thead>
+      <tr>
+        <th>Naam</th>
+        <th>Gemiddelde vraagtijd</th>
+        <th>Maximum vraagtijd</th>
+        <th>Aantal vragen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Table rows will be dynamically populated -->
+    </tbody>
+  </table>
+</div>
+<br /><br /><br />
+
+<style>
+    .table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  #mean-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #mean-table th,
+  #mean-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #mean-table th {
+    background-color: #f2f2f2;
+  }
+</style>
+
+<script>
+  var waitlist = JSON.parse('{{ waitlist | tojson | safe }}');
+  var names = JSON.parse('{{ names | tojson | safe }}');
+  var cid = [];
+  var stack = [];
+  var datasets = [];
+  var meanres = [];
+  var maxres = [];
+  var vragen = [];
+  var colors = [
+  'rgba(255, 99, 132, 0.2)',
+  'rgba(54, 162, 235, 0.2)',
+  'rgba(255, 206, 86, 0.2)',
+  'rgba(75, 192, 192, 0.2)',
+  'rgba(153, 102, 255, 0.2)',
+  'rgba(255, 159, 64, 0.2)',
+  'rgba(255, 0, 0, 0.2)',
+  'rgba(0, 255, 0, 0.2)',
+  'rgba(0, 0, 255, 0.2)',
+  'rgba(128, 128, 128, 0.2)'
+];
+
+if (waitlist == null || waitlist.length == 0) {
+    //array does not exist or is empty
+    document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>")
+    return;
+  }
+  
+  console.log(waitlist);
+  for(var i=0;i<waitlist.length;i++){
+    cid.push(waitlist[i].cid);
+  }
+  cid = Array.from(new Set(cid)).sort((a, b) => a - b);
+
+  for(var i=0;i<names.length;i++){
+    var k = 0;
+    var mean = 0;
+    for(var j=0;j<waitlist.length;j++){
+      if(waitlist[j].cid==i+1){
+        mean += (waitlist[j].time)/60
+        k+=1;
+      }
+    }
+    maxres.push(mean);
+    vragen.push(k);
+    mean = mean/k;
+    //console.log(mean)
+    meanres.push(mean);
+  }
+
+  var k = 0;
+  while(waitlist.length!=0){
+    stack[k] = [];
+    for(var i=1;i<=names.length;i++){
+      for(var j=0;j<waitlist.length;j++){
+        if(waitlist[j].cid==i){
+          stack[k].push((waitlist[j].time)/60);
+          waitlist.splice(j,1);
+          //console.log(stack);
+          //console.log(waitlist);
+          break;
+        }
+        if(j==waitlist.length-1){
+          stack[k].push(0);
+          break;
+        }
+      }
+    }
+    k+=1;
+  }
+
+  console.log(names);
+  console.log(stack);
+
+  for(var i=0;i<k;i++){
+    var color = colors[i % colors.length]; 
+    datasets.push({
+      label: 'vraag '+(i+1),
+      data:stack[i],
+      backgroundColor: [color],
+      borderColor: [color.replace('0.2', '1')],
+      borderWidth: 1})
+  }
+
+  console.log(datasets);
+
+  const ctx = document.getElementById('myChart');
+
+  const data = {
+    labels: names,
+    datasets: datasets
+  };
+
+const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    indexAxis: 'y',
+    scales: {
+      x: {
+        stacked: true,
+        beginAtZero: true,
+        ticks: {
+                    callback: function(value, index, ticks) {
+                        return Math.ceil(value) + 'min ';
+                    },
+                    stepSize: 5
+                },
+      },
+      y: {
+        stacked: true
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            var dataset = context.dataset;
+            var value = dataset.data[context.dataIndex];
+            var minutes = Math.floor(value);
+            var seconds = Math.round((value * 60) % 60);
+            return 'Time: ' + minutes + 'min ' + seconds + 's';
+          }
+        }
+      }
+    }
+  }
+};
+
+new Chart(ctx, config);
+
+
+// Get the table body element
+var tableBody = document.querySelector("#mean-table tbody");
+
+for (var i = 0; i < names.length; i++) {
+  var row = tableBody.insertRow();
+
+  var namesCell = row.insertCell();
+  namesCell.textContent = names[i];
+
+  var meanResCell = row.insertCell();
+  meanResCell.textContent = Math.ceil(meanres[i]) + "min " + (Math.ceil(meanres[i] * 60)) % 60 + "s";
+
+  var maxResCell = row.insertCell();
+  maxResCell.textContent = Math.ceil(maxres[i]) + "min " + (Math.ceil(maxres[i] * 60)) % 60 + "s";
+
+  var maxResCell = row.insertCell();
+  maxResCell.textContent = vragen[i];
+}
+</script>
+
+{% endblock %}
+
+
+
