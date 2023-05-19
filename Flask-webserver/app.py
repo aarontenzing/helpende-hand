@@ -18,8 +18,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 class  Klas(db.Model):
-    cid = db.Column(db.Integer,primary_key=True,autoincrement=True)
-    vak = db.Column(db.String(200), nullable=False)
+    cid = db.Column(db.Integer,primary_key=True)
+    vak = db.Column(db.String(200),primary_key=True,nullable=False)
     name = db.Column(db.String(200), nullable=False)
 
     def __repr__(self):
@@ -82,20 +82,22 @@ def databank():
     if request.method == "POST":
         if(request.form['subject']!='Kies een vak'):
             
-            
-            new_student = Klas(name=request.form['name'], vak = request.form['subject'])
-        # Push to Database
-        #try:
+            # Bekijk laatste id 
+            last_id = db.session.execute(db.select(Klas.cid).where(Klas.vak == request.form['subject'] ).order_by(Klas.cid.desc())).scalar()
+            print("laatste id: ", last_id)
+            if last_id == None:
+                curr_id = 1
+            else:
+                curr_id = last_id + 1
+            new_student = Klas(cid=curr_id, name=request.form['name'], vak = request.form['subject'])
             db.session.add(new_student)
             db.session.commit()
             
-        #except:
-         #   return "Error adding student"
         else:
-                print("leeg")
+            print("leeg")
         return redirect(url_for('databank'))
     else:
-        studenten = db.session.execute(db.select(Klas).order_by(Klas.name)).scalars()
+        studenten = db.session.execute(db.select(Klas).order_by(Klas.vak,Klas.cid)).scalars()
         return render_template("databank.html",title=klaslijst,klas=studenten)
 
 @app.route("/selvak",methods=["POST"])

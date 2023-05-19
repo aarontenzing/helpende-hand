@@ -14,13 +14,16 @@
                     <option>Ingenieursbeleving 2</option>
                 </optgroup>
                 <optgroup label="3e Bachelor">
-                    <option>Sensoren en Actuatoren</option>
-                    <option>Ingenieursbeleving 3</option>
+                    <option value=  "SA">Sensoren en Actuatoren</option>
+                    <option value=  "IB3">Ingenieursbeleving 3</option>
                 </optgroup>
             </select>
         </br></br>
 
             <tr>
+                <td>
+                    <select></select>
+                </td>
                 <td>
                     <input type="text" placeholder="Name" name="name">
                 </td>
@@ -34,7 +37,7 @@
     <br/><br/>
     {% for student in klas %}
         <h4>
-            {{ student.cid }} {{student.vak}} {{ student.name }}
+            {{ student.cid }} {{ student.vak }} {{ student.name }}
         </h4>
     {% endfor %}
     </div>
