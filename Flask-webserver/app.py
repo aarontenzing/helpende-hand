@@ -67,7 +67,7 @@ def stats():
     if request.method == "GET":
         waitlist=tijden()
         print(waitlist)
-        return render_template("statistieken.html",waitlist=waitlist)
+        return render_template("statistieken2.html",waitlist=waitlist)
     else:
         return "Nothing"
     
