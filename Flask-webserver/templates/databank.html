@@ -7,22 +7,20 @@
         <br/>
         <form action="/databank" METHOD="POST">
 
-            <select name="subject">
-                <option>Kies een vak</option>
-                <optgroup label="2e Bachelor">
-                    <option>Computerarchitecturen</option>
-                    <option>Ingenieursbeleving 2</option>
-                </optgroup>
-                <optgroup label="3e Bachelor">
-                    <option value=  "SA">Sensoren en Actuatoren</option>
-                    <option value=  "IB3">Ingenieursbeleving 3</option>
-                </optgroup>
-            </select>
-        </br></br>
-
             <tr>
                 <td>
-                    <select></select>
+                    <select name="subject">
+                        <option>Kies een vak</option>
+                        <optgroup label="2e Bachelor">
+                            <option>Computerarchitecturen</option>
+                            <option>Ingenieursbeleving 2</option>
+                        </optgroup>
+                        <optgroup label="3e Bachelor">
+                            <option value=  "SA">Sensoren en Actuatoren</option>
+                            <option value=  "IB3">Ingenieursbeleving 3</option>
+                        </optgroup>
+                    </select>
+
                 </td>
                 <td>
                     <input type="text" placeholder="Name" name="name">
@@ -34,10 +32,10 @@
             </tr>
         </form>
   
-    <br/><br/>
+    <br/>
     {% for student in klas %}
         <h4>
-            {{ student.cid }} {{ student.vak }} {{ student.name }}
+            {{ student.cid }} | {{ student.vak }} | {{ student.name }}
         </h4>
     {% endfor %}
     </div>
