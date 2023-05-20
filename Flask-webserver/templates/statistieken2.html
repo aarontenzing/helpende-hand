@@ -75,28 +75,36 @@
   'rgba(128, 128, 128, 0.2)'
 ];
 
-console.log(waitlist)
-console.log(names)
+//waitlist.push({cid:'2',time:'600'},{cid:'2',time:'720'},{cid:'3',time:'60'},{cid:'1',time:'120'},{cid:'1',time:'60'})
+//names.push('Jef');
 
-if (waitlist == null || waitlist.length == 0) {
+//console.log([...waitlist])
+//console.log(names)
+
+  var cidSorted = {};
+  var newCid = 1;
+
+  for (var i = 0; i < waitlist.length; i++) {         //makes cid's consecutive from 1 to max(cid).
+    var cid = waitlist[i].cid;
+    if (!(cid in cidSorted)) {
+        cidSorted[cid] = newCid;
+        newCid++;
+    }
+    waitlist[i].cid = cidSorted[cid].toString();
+  }
+
+  var maxCid = Math.max(...waitlist.map(entry => parseInt(entry.cid)));    //determines max(cid).
+  //console.log(maxCid)
+
+if (waitlist == null || waitlist.length == 0 || maxCid != names.length) {
     //array does not exist or is empty
-    document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>")
-    
+    document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>") 
 }
 
-
 else{
+  console.log([...waitlist])
 
-  document.write("<div class ='container'><h2>Welkom in de else</h2></div>")
-
-/*
-  console.log(waitlist);
-  for(var i=0;i<waitlist.length;i++){
-    cid.push(waitlist[i].cid);
-  }
-  cid = Array.from(new Set(cid)).sort((a, b) => a - b);
-
-  for(var i=0;i<names.length;i++){
+  for(var i=0;i<names.length;i++){                    //calculates the mean of every cid, by adding up all the times and deviding by the amount of times.
     var k = 0;
     var mean = 0;
     for(var j=0;j<waitlist.length;j++){
@@ -107,13 +115,18 @@ else{
     }
     maxres.push(mean);
     vragen.push(k);
-    mean = mean/k;
+    if(k==0){
+      mean = 0;
+    }
+    else{
+      mean = mean/k;
+    }
     //console.log(mean)
     meanres.push(mean);
   }
 
   var k = 0;
-  while(waitlist.length!=0){
+  while(waitlist.length!=0){                        //sorts the consecutive times every cid asked a question in stack and splices that time from waitlist.
     stack[k] = [];
     for(var i=1;i<=names.length;i++){
       for(var j=0;j<waitlist.length;j++){
@@ -136,7 +149,7 @@ else{
   console.log(names);
   console.log(stack);
 
-  for(var i=0;i<k;i++){
+  for(var i=0;i<k;i++){                                     //makes the dataset list of every question per cid.
     var color = colors[i % colors.length]; 
     datasets.push({
       label: 'vraag '+(i+1),
@@ -150,12 +163,12 @@ else{
 
   const ctx = document.getElementById('myChart');
 
-  const data = {
+  const data = {                                          //data for the graph based on names(cid) and amount of questions.
     labels: names,
     datasets: datasets
   };
 
-const config = {
+const config = {                                          //drawing the stacked bar graph.
   type: 'bar',
   data: data,
   options: {
@@ -165,7 +178,7 @@ const config = {
         stacked: true,
         beginAtZero: true,
         ticks: {
-                    callback: function(value, index, ticks) {
+                    callback: function(value, index, ticks) {           //better text in axis.
                         return Math.ceil(value) + 'min ';
                     },
                     stepSize: 5
@@ -175,7 +188,7 @@ const config = {
         stacked: true
       }
     },
-    plugins: {
+    plugins: {                                                          //better text in hover bar.
       tooltip: {
         callbacks: {
           label: function (context) {
@@ -197,7 +210,7 @@ new Chart(ctx, config);
 // Get the table body element
 var tableBody = document.querySelector("#mean-table tbody");
 
-for (var i = 0; i < names.length; i++) {
+for (var i = 0; i < names.length; i++) {                                    //dynamic table.
   var row = tableBody.insertRow();
 
   var namesCell = row.insertCell();
@@ -212,7 +225,6 @@ for (var i = 0; i < names.length; i++) {
   var maxResCell = row.insertCell();
   maxResCell.textContent = vragen[i];
 }
-*/
 }
 
 </script>
