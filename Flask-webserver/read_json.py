@@ -3,10 +3,10 @@ import os
 
 def tijden():
 
-    if os.stat('./Flask-webserver/log_test.json').st_size == 0:
+    if os.stat('./Flask-webserver/log_prob.json').st_size == 0:
         return
     
-    json_data=open('./Flask-webserver/log_test.json')
+    json_data=open('./Flask-webserver/log_prob.json')
 
     # EERST DE LIJST ORDENEN
 

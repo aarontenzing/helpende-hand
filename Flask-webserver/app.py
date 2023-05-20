@@ -66,6 +66,7 @@ def get_values():
 def stats():
     if request.method == "GET":
         waitlist=tijden()
+        print("Dit is een wachtlijst:", waitlist)
         distinct_cid = []
         names = []
         distinct_cid= list(set(unique['cid'] for unique in waitlist))
