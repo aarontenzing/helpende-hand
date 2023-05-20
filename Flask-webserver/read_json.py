@@ -1,12 +1,19 @@
 import json
 import os
 
-def tijden():
+resultaat = []
 
+
+def tijden():
+    
     if os.stat('./Flask-webserver/log_prob.json').st_size == 0:
+    #if os.stat('log_prob.json').st_size == 0:
+
         return
     
     json_data=open('./Flask-webserver/log_prob.json')
+    #json_data=open('log_prob.json')
+
 
     # EERST DE LIJST ORDENEN
 
@@ -55,13 +62,21 @@ def tijden():
         print(leftlist[i]['cid'])
     """
     waitlist=[]
-    print(len(leftlist), leftlist)
+    #print(len(leftlist), leftlist)
+    #print('Lengte van leftlist :', len(leftlist))
+    #print('Lengte van leftlist :', len(joinlist))
 
+
+    #print("Joinlist: ", joinlist)
+    #print("Leftlist :", leftlist)
+
+    if(len(joinlist)!=len(leftlist)):
+        return waitlist
 
     for i in range(len(joinlist)):
         j=0
         if(joinlist[i]['cid']==leftlist[j]['cid']):
-            print(joinlist[i]['cid'])
+            #print(joinlist[i]['cid'])
             time = (leftlist[j]['time'] - joinlist[i]['time'])
 
             newitem = { "cid": joinlist[i]['cid'], "time": time }
@@ -81,9 +96,14 @@ def tijden():
                     del leftlist[j]
                 j+=1
 
+    '''
     print('Waitlist:')    
     for i in range(len(waitlist)):
 
         print(waitlist[i]['cid'],waitlist[i]['time'],'seconden')
 
     return waitlist
+    '''
+
+resultaat=tijden()
+print(resultaat)
