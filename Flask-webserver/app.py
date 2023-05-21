@@ -107,7 +107,7 @@ def selectvak():
         #print(filtervak)
         # Not working trying to select class en putting it in global var. (so /value can query right class)
         # Need to fix when creating< table -> different tables for every subject
-        return render_template('queue.html')
+        return render_template('queue.html', subject=filtervak[0])
     
 @app.route("/selvak2",methods=["POST"])
 def selectvak2():

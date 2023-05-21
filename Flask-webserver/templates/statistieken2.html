@@ -20,11 +20,10 @@
           <option>Sensoren en Actuatoren</option>
           <option>Ingenieursbeleving 3</option>
       </optgroup>
-  </select>
-  <td>               
-      <input type="submit" value="submit" class="btn btn-secondary">
-  </td>
-  </br></br>
+  </select>               
+  <input type="submit" value="submit" class="btn btn-secondary">
+</form>
+</br>
   
 <div>
   <canvas id="myChart"></canvas>
@@ -46,7 +45,7 @@
     </tbody>
   </table>
 </div>
-<br/><br/><br/>
+<br/><br/>
 
 <style>
     .table-container {
@@ -149,15 +148,15 @@ else{
 
   subject = waitlist[0].subject; // het vak opslaan voor in tabel
   if (!subject) {
-    subject = "Unknown"
+    subject = "Unknown" 
+  }
 
-      for (let j = 0; j < names.length; j++) {
+  for (let j = 0; j < names.length; j++) {
         for (let i = 0; i < len_waitlist; i++ ) {
-          console.log("print eeeee", waitlist[i].cid, names.length)
+          //console.log("print eeeee", waitlist[i].cid, names.length)
           if (names[j] == null && !names.includes(waitlist[i].cid) ) { // geen filtervak , naam is CID
             names[j] = waitlist[i].cid;
-            //break;
-        }
+            break;
       }
     }
   }
@@ -243,24 +242,24 @@ console.log(meanres[0])
 // Get the table body element
 var tableBody = document.querySelector("#mean-table tbody");
 
-for (var i = 0; i < names.length; i++) {                                    //dynamic table.
-  var row = tableBody.insertRow();
+  for (var i = 0; i < names.length; i++) {                                    //dynamic table.
+    var row = tableBody.insertRow();
 
-  var namesCell = row.insertCell();
-  namesCell.textContent = names[i];
+    var namesCell = row.insertCell();
+    namesCell.textContent = names[i];
 
-  var meanResCell = row.insertCell();
-  meanResCell.textContent = Math.floor(meanres[i]) + "min " + (Math.round(meanres[i] * 60) % 60) + "s";
+    var meanResCell = row.insertCell();
+    meanResCell.textContent = Math.floor(meanres[i]) + "min " + (Math.round(meanres[i] * 60) % 60) + "s";
 
-  var maxResCell = row.insertCell();
-  maxResCell.textContent = Math.floor(maxres[i]) + "min " + (Math.round(maxres[i] * 60) % 60) + "s";
+    var maxResCell = row.insertCell();
+    maxResCell.textContent = Math.floor(maxres[i]) + "min " + (Math.round(maxres[i] * 60) % 60) + "s";
 
-  var maxResCell = row.insertCell();
-  maxResCell.textContent = vragen[i];
+    var maxResCell = row.insertCell();
+    maxResCell.textContent = vragen[i];
 
-  var maxResCell = row.insertCell();
-  maxResCell.textContent = subject;
-}
+    var maxResCell = row.insertCell();
+    maxResCell.textContent = subject;
+  }
 }
 
 </script>
