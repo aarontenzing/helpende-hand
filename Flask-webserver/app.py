@@ -56,7 +56,7 @@ def get_values():
         for i in user_list:
             names.append(Klas.query.filter_by(cid=i, vak=filtervak[0]).with_entities(Klas.name).scalar())
         print(names)
-        # querying student name from the database, if no entry NULL
+        #querying student name from the database, if no entry NULL
         data = {'users':user_list, 'time':time_list, 'names':names}
         return jsonify(data)
     else:
@@ -66,21 +66,52 @@ def get_values():
 def stats():
     if request.method == "GET":
         waitlist=tijden()
-        print("Dit is een wachtlijst:", waitlist)
+        #print("Dit is een wachtlijst:", waitlist)
         distinct_cid = []
         names = []
         distinct_cid= list(set(unique['cid'] for unique in waitlist))
-        print("distinct cids: ", distinct_cid)
+        #print("distinct cids: ", distinct_cid)
         
         for i in distinct_cid:
-            print("uniek cid: ", i)
+            #print("uniek cid: ", i)
             names.append(Klas.query.filter_by(cid=int(i), vak="SA").with_entities(Klas.name).scalar())
-            print("names: ", names) 
-        print("finaal_names: ", names) 
+            #print("names: ", names) 
+        #print("finaal_names: ", names) 
         return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"
     
+@app.route('/update',methods=["POST","GET"])
+def update():
+    if request.method == "GET":
+        table_klas = db.session.execute(db.select(Klas).order_by(Klas.vak,Klas.cid)).scalars()
+        print('tabel: ',table_klas)
+        return render_template('update.html',title='Update databank',klas=table_klas)
+
+    if request.method == "POST":
+        update_student_cid = request.form.getlist('cid')
+        update_student_vak= request.form.getlist('vak')
+        update_student_naam = request.form.getlist('naam')
+
+        print("lijst met cids:" ,update_student_cid)
+        print("lijst met vak:" ,update_student_vak)
+        print("lijst met naam:" ,update_student_naam)
+
+        #db.session.drop(Klas)
+        Klas.__table__.drop(db.engine)
+        Klas.__table__.create(db.engine)
+        for i in range(len(update_student_cid)):
+            if(update_student_cid[i] == '' or update_student_vak[i] == '' or update_student_naam[i] == ''):
+                print('Index {} Overslaan'.format(i))
+                pass
+            else:
+                new_student = Klas(cid=int(update_student_cid[i]), name=str(update_student_naam[i]), vak = str(update_student_vak[i]))
+                db.session.add(new_student)
+                db.session.commit()
+                print('succes')
+       
+        return redirect(url_for('databank'))
+
 @app.route("/databank",methods=["POST","GET"])
 def databank():
     klaslijst = "Lijst met Studentnamen"

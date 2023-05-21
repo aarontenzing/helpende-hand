@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <div class ="container">
+
+        <h1>Overzicht databank</h1>
+        <form action="/update" METHOD="POST">
+
+            <table cellspacing ="10">
+                <tr>
+                    <th>ID</th>
+                    <th>Vak</th>
+                    <th>Naam</th>
+                </tr>
+                {% for student in klas %}
+                <tr>
+                    <td><textarea name="cid" rows="1" cols="2">{{ student.cid }}</textarea></td>
+                    <td><textarea name="vak" rows="1" cols="20">{{ student.vak }}</textarea></td>
+                    <td><textarea name="naam" rows="1" cols="20">{{ student.name }}</textarea></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+            <input type="submit" value="Pas Aan" class="btn btn-secondary">
+        </form>
+  
+    <br/>
+    
+    </div>
+    <br><br><br><br>
+{% endblock %}
