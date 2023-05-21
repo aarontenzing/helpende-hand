@@ -46,10 +46,16 @@ def tijden(vak):
 
     waitlist=[]
 
+    #print("Joinlist: ", joinlist)
+    #print("Leftlist :", leftlist)
+
+    if(len(joinlist)!=len(leftlist)):
+        return waitlist
+
     for i in range(len(joinlist)):
         j=0
         if(joinlist[i]['cid']==leftlist[j]['cid']):
-            print(joinlist[i]['cid'])
+            #print(joinlist[i]['cid'])
             time = (leftlist[j]['time'] - joinlist[i]['time'])
 
             newitem = { "cid": joinlist[i]['cid'], "time": time, "subject": joinlist[i]['subject'] }
