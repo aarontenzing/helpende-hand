@@ -1,25 +1,21 @@
 import json
 import os
 
-resultaat = []
+def tijden(vak):
 
-
-def tijden():
-    
-    if os.stat('./Flask-webserver/log_prob.json').st_size == 0:
-    #if os.stat('log_prob.json').st_size == 0:
-
+    if os.stat('Flask-webserver\log_prob.json').st_size == 0:
         return
     
-    json_data=open('./Flask-webserver/log_prob.json')
-    #json_data=open('log_prob.json')
-
+    json_data=open('Flask-webserver\log_prob.json')
 
     # EERST DE LIJST ORDENEN
 
     data=json.load(json_data)
+  
     data=sorted(data, key=lambda item : item["cid"])
-    #print(len(data))
+    data=sorted(data, key=lambda item : item["subject"])
+
+    print(data)
     joinlist=[]
     leftlist=[]
     timelist=[]
@@ -39,33 +35,16 @@ def tijden():
         if(data[i]['entry']=='joined'):
 
             #print("Joined:",data[i]['time'])
-            newitem = { "cid": data[i]['cid'], "time": data[i]['time'] }
+            newitem = { "cid": data[i]['cid'], "time": data[i]['time'], "subject": data[i]['subject'] }
             joinlist.append(newitem)
 
         if(data[i]['entry']=='left'):
 
             #print("Left:",data[i]['time'])
-            newitem = { "cid": data[i]['cid'], "time": data[i]['time'] }
+            newitem = { "cid": data[i]['cid'], "time": data[i]['time'], "subject": data[i]['subject'] }
             leftlist.append(newitem)
 
-        #splitsop=data[i]['time'].split(":")
-        #print(splitsop)
-    """
-    print('Joinlist:')
-    for i in range(len(joinlist)):
-
-        print(joinlist[i]['cid'])
-
-    print('Leftlist:')
-    for i in range(len(leftlist)):
-
-        print(leftlist[i]['cid'])
-    """
     waitlist=[]
-    #print(len(leftlist), leftlist)
-    #print('Lengte van leftlist :', len(leftlist))
-    #print('Lengte van leftlist :', len(joinlist))
-
 
     #print("Joinlist: ", joinlist)
     #print("Leftlist :", leftlist)
@@ -79,7 +58,7 @@ def tijden():
             #print(joinlist[i]['cid'])
             time = (leftlist[j]['time'] - joinlist[i]['time'])
 
-            newitem = { "cid": joinlist[i]['cid'], "time": time }
+            newitem = { "cid": joinlist[i]['cid'], "time": time, "subject": joinlist[i]['subject'] }
             waitlist.append(newitem)
 
             del leftlist[j]
@@ -87,23 +66,21 @@ def tijden():
         else:
 
             while(j<len(leftlist)):
-                if(joinlist[i]['cid']==leftlist[j]['cid']):
+                if(joinlist[i]['cid']==leftlist[j]['cid'] and joinlist[i]['subject']==leftlist[j]['subject']):
                     time = (leftlist[j]['time']-joinlist[i]['time'])
-                    
-                    newitem = { "cid": joinlist[i]['cid'], "time": time }
+                    newitem = { "cid": joinlist[i]['cid'], "time": time, "subject" : joinlist[i]['subject'] }
                     waitlist.append(newitem)
 
                     del leftlist[j]
                 j+=1
 
-    '''
-    print('Waitlist:')    
-    for i in range(len(waitlist)):
+    #print("dit is de waitlist",waitlist)
 
-        print(waitlist[i]['cid'],waitlist[i]['time'],'seconden')
-
-    return waitlist
-    '''
-
-resultaat=tijden()
-print(resultaat)
+    tmp = []
+    # Wanneer vak geselecteerd is filter op vak
+    for x in range(len(waitlist)):
+         if (waitlist[x]['subject'] == vak):
+            tmp.append(waitlist[x])
+    return tmp
+    
+ 

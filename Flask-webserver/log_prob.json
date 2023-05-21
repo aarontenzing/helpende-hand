@@ -1,101 +1,254 @@
 [
     {
         "cid": "1",
-        "time": "14:29:46",
-        "entry": "joined"
+        "time": "23:13:31",
+        "entry": "joined",
+        "subject": ""
     },
     {
         "cid": "1",
-        "time": "14:31:10",
-        "entry": "left"
+        "time": "23:13:37",
+        "entry": "left",
+        "subject": ""
     },
     {
         "cid": "1",
-        "time": "12:25:14",
-        "entry": "joined"
+        "time": "23:13:55",
+        "entry": "joined",
+        "subject": "Ingenieursbeleving 2"
     },
     {
         "cid": "1",
-        "time": "12:25:38",
-        "entry": "left"
+        "time": "23:13:58",
+        "entry": "left",
+        "subject": "Ingenieursbeleving 2"
     },
     {
         "cid": "1",
-        "time": "12:25:55",
-        "entry": "joined"
+        "time": "23:24:05",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
     },
     {
         "cid": "1",
-        "time": "12:26:04",
-        "entry": "left"
+        "time": "23:24:11",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
     },
     {
         "cid": "1",
-        "time": "12:26:48",
-        "entry": "joined"
+        "time": "11:29:22",
+        "entry": "joined",
+        "subject": ""
     },
     {
         "cid": "1",
-        "time": "12:26:50",
-        "entry": "left"
+        "time": "11:29:33",
+        "entry": "left",
+        "subject": ""
     },
     {
         "cid": "1",
-        "time": "12:26:52",
-        "entry": "joined"
+        "time": "11:30:12",
+        "entry": "joined",
+        "subject": "Ingenieursbeleving 2"
     },
     {
         "cid": "1",
-        "time": "12:26:53",
-        "entry": "left"
+        "time": "11:30:19",
+        "entry": "left",
+        "subject": "Ingenieursbeleving 2"
     },
     {
         "cid": "1",
-        "time": "12:26:59",
-        "entry": "joined"
+        "time": "12:01:32",
+        "entry": "joined",
+        "subject": "Ingenieursbeleving 2"
     },
     {
         "cid": "1",
-        "time": "12:27:01",
-        "entry": "left"
+        "time": "12:01:47",
+        "entry": "left",
+        "subject": "Ingenieursbeleving 2"
+    },
+    {
+        "cid": "2",
+        "time": "12:34:25",
+        "entry": "joined",
+        "subject": ""
+    },
+    {
+        "cid": "2",
+        "time": "12:34:30",
+        "entry": "left",
+        "subject": ""
     },
     {
         "cid": "1",
-        "time": "12:27:06",
-        "entry": "joined"
+        "time": "12:49:06",
+        "entry": "joined",
+        "subject": ""
     },
     {
         "cid": "1",
-        "time": "12:27:16",
-        "entry": "left"
+        "time": "12:49:08",
+        "entry": "left",
+        "subject": ""
+    },
+    {
+        "cid": "2",
+        "time": "13:14:03",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "2",
+        "time": "13:14:07",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "2",
+        "time": "13:14:32",
+        "entry": "joined",
+        "subject": ""
+    },
+    {
+        "cid": "2",
+        "time": "13:14:36",
+        "entry": "left",
+        "subject": ""
+    },
+    {
+        "cid": "3",
+        "time": "15:54:35",
+        "entry": "joined",
+        "subject": ""
+    },
+    {
+        "cid": "3",
+        "time": "15:54:42",
+        "entry": "left",
+        "subject": ""
     },
     {
         "cid": "1",
-        "time": "12:27:20",
-        "entry": "joined"
+        "time": "16:06:26",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
     },
     {
         "cid": "1",
-        "time": "12:27:28",
-        "entry": "left"
+        "time": "16:06:43",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
     },
     {
         "cid": "1",
-        "time": "21:29:08",
-        "entry": "joined"
+        "time": "16:07:29",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
     },
     {
         "cid": "1",
-        "time": "21:29:13",
-        "entry": "left"
+        "time": "16:07:30",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
     },
     {
         "cid": "1",
-        "time": "21:31:52",
-        "entry": "joined"
+        "time": "16:09:46",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:09:47",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:09:58",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:09:59",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:10:06",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "3",
+        "time": "16:10:14",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "4",
+        "time": "16:10:20",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "5",
+        "time": "16:10:26",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "3",
+        "time": "16:11:04",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "4",
+        "time": "16:11:08",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "5",
+        "time": "16:11:11",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:11:16",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:17:33",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:17:35",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "1",
+        "time": "16:17:44",
+        "entry": "joined",
+        "subject": ""
+    },
+    {
+        "cid": "1",
+        "time": "16:17:50",
+        "entry": "left",
+        "subject": ""
     }
-
-    
 ]
-
-    

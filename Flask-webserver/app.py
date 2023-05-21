@@ -43,8 +43,8 @@ def queue():
     if request.method == "POST":
         cid = request.form["cid"]
         pressed = int(request.form["button"])
-        print(cid)
-        add_queue(cid, pressed, user_list, time_list)
+        subject = filtervak[0]
+        add_queue(cid, pressed, user_list, time_list, subject)
         return "succes"
     else:
         return render_template('queue.html')
@@ -121,7 +121,7 @@ def databank():
             
             # Bekijk laatste id 
             last_id = db.session.execute(db.select(Klas.cid).where(Klas.vak == request.form['subject'] ).order_by(Klas.cid.desc())).scalar()
-            print("laatste id: ", last_id)
+            #print("laatste id: ", last_id)
             if last_id == None:
                 curr_id = 1
             else:
@@ -141,14 +141,41 @@ def databank():
 def selectvak():
     if request.method == "POST":
         if request.form['vak'] == "Vakken":
-            filtervak[0] = " "
+            filtervak[0] = ""
         else:
             filtervak[0] = str(request.form['vak'])
             
-        print(filtervak)
+        #print(filtervak)
         # Not working trying to select class en putting it in global var. (so /value can query right class)
         # Need to fix when creating< table -> different tables for every subject
-        return render_template('queue.html')
+        return render_template('queue.html', subject=filtervak[0])
+    
+@app.route("/selvak2",methods=["POST"])
+def selectvak2():
+    if request.method == "POST":
+
+        if request.form['vak'] == "Geen vak":
+            filtervak[0] = ""
+        else:
+            filtervak[0] = str(request.form['vak'])
+        
+        waitlist = tijden(filtervak[0]) # gaat entries halen die het juist vak bevatten
+        print("zonder filter",waitlist)
+        distinct_cid = []
+        names = []
+    
+        distinct_cid= list(set(unique['cid'] for unique in waitlist))
+        
+        for i in distinct_cid:
+            #print("uniek cid: ", i)
+            names.append(Klas.query.filter_by(cid=int(i), vak=filtervak[0]).with_entities(Klas.name).scalar())
+            #print("names: ", names) 
+            #print("finaal_names: ", names) 
+
+        return render_template("statistieken2.html",waitlist=waitlist, names=names)
+        
+        # Not working trying to select class en putting it in global var. (so /value can query right class)
+        # Need to fix when creating< table -> different tables for every subject
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

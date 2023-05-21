@@ -9,6 +9,22 @@
 
 
 {% block content %}
+<form ACTION="/selvak2" METHOD="POST">
+  <select name="vak">
+      <option>Geen vak</option>
+      <optgroup label="2e Bachelor">
+          <option>Computerarchitecturen</option>
+          <option>Ingenieursbeleving 2</option>
+      </optgroup>
+      <optgroup label="3e Bachelor">
+          <option>Sensoren en Actuatoren</option>
+          <option>Ingenieursbeleving 3</option>
+      </optgroup>
+  </select>               
+  <input type="submit" value="submit" class="btn btn-secondary">
+</form>
+</br>
+  
 <div>
   <canvas id="myChart"></canvas>
 </div>
@@ -21,6 +37,7 @@
         <th>Gemiddelde vraagtijd</th>
         <th>Maximum vraagtijd</th>
         <th>Aantal vragen</th>
+        <th>Vak</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +45,7 @@
     </tbody>
   </table>
 </div>
-<br /><br /><br />
+<br/><br/>
 
 <style>
     .table-container {
@@ -54,7 +71,9 @@
 </style>
 
 <script>
+  
   var waitlist = JSON.parse('{{ waitlist | tojson | safe }}');
+  var len_waitlist = waitlist.length;
   var names = JSON.parse('{{ names | tojson | safe }}');
   var cid = [];
   var stack = [];
@@ -74,6 +93,7 @@
   'rgba(0, 0, 255, 0.2)',
   'rgba(128, 128, 128, 0.2)'
 ];
+
 
 //waitlist.push({cid:'2',time:'600'},{cid:'2',time:'720'},{cid:'3',time:'60'},{cid:'1',time:'120'},{cid:'1',time:'60'})
 //names.push('Jef');
@@ -102,10 +122,11 @@ if (waitlist == null || waitlist.length == 0 || maxCid != names.length) {
 }
 
 else{
-  console.log([...waitlist])
-
-  for(var i=0;i<names.length;i++){                    //calculates the mean of every cid, by adding up all the times and deviding by the amount of times.
-    var k = 0;
+  //console.log([...waitlist])
+  //calculates the mean of every cid, by adding up all the times and deviding by the amount of times.
+  console.log("print tijd",waitlist[0].time)
+  for(var i=0;i<names.length;i++){                    
+    var k = 0; // vragen
     var mean = 0;
     for(var j=0;j<waitlist.length;j++){
       if(waitlist[j].cid==i+1){
@@ -121,20 +142,33 @@ else{
     else{
       mean = mean/k;
     }
-    //console.log(mean)
+    console.log("mean:",mean)
     meanres.push(mean);
   }
 
+  subject = waitlist[0].subject; // het vak opslaan voor in tabel
+  if (!subject) {
+    subject = "Unknown" 
+  }
+
+  for (let j = 0; j < names.length; j++) {
+        for (let i = 0; i < len_waitlist; i++ ) {
+          //console.log("print eeeee", waitlist[i].cid, names.length)
+          if (names[j] == null && !names.includes(waitlist[i].cid) ) { // geen filtervak , naam is CID
+            names[j] = waitlist[i].cid;
+            break;
+      }
+    }
+  }
+
   var k = 0;
-  while(waitlist.length!=0){                        //sorts the consecutive times every cid asked a question in stack and splices that time from waitlist.
+  while(waitlist.length!=0){         //sorts the consecutive times every cid asked a question in stack and splices that time from waitlist.
     stack[k] = [];
     for(var i=1;i<=names.length;i++){
       for(var j=0;j<waitlist.length;j++){
         if(waitlist[j].cid==i){
           stack[k].push((waitlist[j].time)/60);
           waitlist.splice(j,1);
-          //console.log(stack);
-          //console.log(waitlist);
           break;
         }
         if(j==waitlist.length-1){
@@ -146,10 +180,10 @@ else{
     k+=1;
   }
 
-  console.log(names);
-  console.log(stack);
+  console.log("namen",names);
+  console.log("stack:",stack);
 
-  for(var i=0;i<k;i++){                                     //makes the dataset list of every question per cid.
+  for(var i=0;i<k;i++){                                    //makes the dataset list of every question per cid.
     var color = colors[i % colors.length]; 
     datasets.push({
       label: 'vraag '+(i+1),
@@ -158,8 +192,6 @@ else{
       borderColor: [color.replace('0.2', '1')],
       borderWidth: 1})
   }
-
-  console.log(datasets);
 
   const ctx = document.getElementById('myChart');
 
@@ -206,25 +238,28 @@ const config = {                                          //drawing the stacked 
 
 new Chart(ctx, config);
 
-
+console.log(meanres[0])
 // Get the table body element
 var tableBody = document.querySelector("#mean-table tbody");
 
-for (var i = 0; i < names.length; i++) {                                    //dynamic table.
-  var row = tableBody.insertRow();
+  for (var i = 0; i < names.length; i++) {                                    //dynamic table.
+    var row = tableBody.insertRow();
 
-  var namesCell = row.insertCell();
-  namesCell.textContent = names[i];
+    var namesCell = row.insertCell();
+    namesCell.textContent = names[i];
 
-  var meanResCell = row.insertCell();
-  meanResCell.textContent = Math.ceil(meanres[i]) + "min " + (Math.ceil(meanres[i] * 60)) % 60 + "s";
+    var meanResCell = row.insertCell();
+    meanResCell.textContent = Math.floor(meanres[i]) + "min " + (Math.round(meanres[i] * 60) % 60) + "s";
 
-  var maxResCell = row.insertCell();
-  maxResCell.textContent = Math.ceil(maxres[i]) + "min " + (Math.ceil(maxres[i] * 60)) % 60 + "s";
+    var maxResCell = row.insertCell();
+    maxResCell.textContent = Math.floor(maxres[i]) + "min " + (Math.round(maxres[i] * 60) % 60) + "s";
 
-  var maxResCell = row.insertCell();
-  maxResCell.textContent = vragen[i];
-}
+    var maxResCell = row.insertCell();
+    maxResCell.textContent = vragen[i];
+
+    var maxResCell = row.insertCell();
+    maxResCell.textContent = subject;
+  }
 }
 
 </script>
