@@ -65,18 +65,9 @@ def get_values():
 @app.route("/stats",methods=["GET"])
 def stats():
     if request.method == "GET":
-        waitlist=tijden()
-        #print("Dit is een wachtlijst:", waitlist)
-        distinct_cid = []
+        waitlist=[]
         names = []
-        distinct_cid= list(set(unique['cid'] for unique in waitlist))
-        #print("distinct cids: ", distinct_cid)
         
-        for i in distinct_cid:
-            #print("uniek cid: ", i)
-            names.append(Klas.query.filter_by(cid=int(i), vak="SA").with_entities(Klas.name).scalar())
-            #print("names: ", names) 
-        #print("finaal_names: ", names) 
         return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"
