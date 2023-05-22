@@ -142,5 +142,29 @@
         "time": "17:21:09",
         "entry": "left",
         "subject": "Ingenieursbeleving 2"
+    },
+    {
+        "cid": "1",
+        "time": "18:04:14",
+        "entry": "joined",
+        "subject": "Ingenieursbeleving 2"
+    },
+    {
+        "cid": "1",
+        "time": "18:04:20",
+        "entry": "left",
+        "subject": "Ingenieursbeleving 2"
+    },
+    {
+        "cid": "2",
+        "time": "18:06:35",
+        "entry": "joined",
+        "subject": "Computerarchitecturen"
+    },
+    {
+        "cid": "2",
+        "time": "18:06:39",
+        "entry": "left",
+        "subject": "Computerarchitecturen"
     }
 ]

@@ -27,6 +27,7 @@
 </form>
 </div>
 <br/>
+<h3>{{subject}}</h3>
 
 <div class ='container'><h2 id="verwerken"></h2></div>
 <div>
@@ -41,7 +42,6 @@
         <th>Gemiddelde vraagtijd</th>
         <th>Maximum vraagtijd</th>
         <th>Aantal vragen</th>
-        <th>Vak</th>
       </tr>
     </thead>
     <tbody>
@@ -153,15 +153,12 @@ else
     meanres.push(mean);
   }
 
-  /*subject = waitlist[0].subject; // het vak opslaan voor in tabel
-  if (!subject) {
-    subject = "Unknown" 
-  }*/
-
+  subject = waitlist[0].subject; // het vak opslaan voor in tabel
+  
   for (let j = 0; j < names.length; j++) {
         for (let i = 0; i < len_waitlist; i++ ) {
           //console.log("print eeeee", waitlist[i].cid, names.length)
-          if (names[j] == null && !names.includes(waitlist[i].cid) ) { // geen filtervak , naam is CID
+          if (names[j] == null && !names.includes(waitlist[i].cid) ) { // geen naam uit databank kunnen halen, naam is CID
             names[j] = waitlist[i].cid;
             break;
       }
@@ -264,8 +261,8 @@ var tableBody = document.querySelector("#mean-table tbody");
     var maxResCell = row.insertCell();
     maxResCell.textContent = vragen[i];
 
-    var maxResCell = row.insertCell();
-    maxResCell.textContent = subject;
+    /*var maxResCell = row.insertCell();
+    maxResCell.textContent = subject;*/
   }
 }
 

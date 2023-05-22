@@ -146,13 +146,13 @@ def selectvak():
 def selectvak2():
     if request.method == "POST":
 
-        if request.form['vak'] == "Geen vak":
+        if request.form['vak'] == "Vakken":
             filtervak[0] = ""
         else:
             filtervak[0] = str(request.form['vak'])
         
         waitlist = tijden(filtervak[0]) # gaat entries halen die het juist vak bevatten
-        print("zonder filter",waitlist)
+        
         distinct_cid = []
         names = []
     
@@ -163,8 +163,11 @@ def selectvak2():
             names.append(Klas.query.filter_by(cid=int(i), vak=filtervak[0]).with_entities(Klas.name).scalar())
             #print("names: ", names) 
             #print("finaal_names: ", names) 
-
-        return render_template("statistieken2.html",waitlist=waitlist, names=names)
+        
+        if (len(waitlist) == 0): # waneer er geen data is geen subject title
+            filtervak[0] = ""
+            
+        return render_template("statistieken2.html",waitlist=waitlist, names=names, subject=filtervak[0])
         
         # Not working trying to select class en putting it in global var. (so /value can query right class)
         # Need to fix when creating< table -> different tables for every subject
