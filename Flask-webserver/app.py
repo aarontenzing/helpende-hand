@@ -41,13 +41,15 @@ def home():
 @app.route("/queue",methods=["GET","POST"])
 def queue():
     if request.method == "POST":
+        if (filtervak[0] == ""):
+            return "geen vak geselecteerd"
         cid = request.form["cid"]
         pressed = int(request.form["button"])
         subject = filtervak[0]
         add_queue(cid, pressed, user_list, time_list, subject)
         return "succes"
     else:
-        return render_template('queue.html')
+        return render_template('queue.html', subject=filtervak[0])
     
 @app.route("/values", methods=["GET"])
 def get_values():
@@ -67,7 +69,6 @@ def stats():
     if request.method == "GET":
         waitlist=[]
         names = []
-        
         return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"

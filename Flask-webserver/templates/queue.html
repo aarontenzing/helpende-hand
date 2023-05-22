@@ -4,7 +4,6 @@
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script> 
-    
     setInterval(function(){
         $.ajax({
         type: "GET",
@@ -14,9 +13,9 @@
             $.each(data.users, function(index, value){
                 console.log(data);
                 event_data += '<tr>';
+                event_data += '<td>'+data.names[index]+'</td>';
                 event_data += '<td>'+value+'</td>';
                 event_data += '<td>'+data.time[index]+'</td>';
-                event_data += '<td>'+data.names[index]+'</td>';
                 event_data += '</tr>';
             });
             $("#list_table_json").empty();
@@ -28,9 +27,9 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="w-25 p-3" >
     <form ACTION="/selvak" METHOD="POST">
-    <select name="vak">
+    <select name="vak" class="form-select"  aria-label="Default select example">
         <option>Vakken</option>
         <optgroup label="2e Bachelor">
             <option>Computerarchitecturen</option>
@@ -40,21 +39,21 @@
             <option>Sensoren en Actuatoren</option>
             <option>Ingenieursbeleving 3</option>
         </optgroup>
-    </select>
-    <td>               
-        <input type="submit" value="submit" class="btn btn-secondary">
-    </td>
-    </form>
-    
+    </select> 
+    <br/>            
+    <input type="submit" value="submit" class="btn btn-secondary">
+</form>
+</div>
+
     <br>
     <h3>{{subject}}</h3>
     <table class="table table-striped table-light">
         
         <thead>
             <tr>
+                <th>Student</th>
                 <th>User ID</th>
                 <th>Join time</th>
-                <th>Student</th>
             </tr>
         </thead>
 
