@@ -7,7 +7,6 @@ const char* serverUrl = "http://192.168.0.240:5000/queue";
 
 const int cid = 1;
 const int AANT_SEC = 2;
-const int RESEND = 4;
 
 const int buttonPin = 1; // TX 
 const int buttonEn = 0; // GPIO0
