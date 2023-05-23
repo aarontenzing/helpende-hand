@@ -25,6 +25,12 @@ class  Klas(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.cid 
 
+class Wachttijd(db.Model):
+    cid = db.Column(db.Integer,foreign_key=True),
+    vak = db.Column(db.String(200),foreign_key=True,nullable=False)
+    wachttijd = db.Column(db.Integer)
+    sessie = db.Column(db.Integer,nullable=False)
+
 with app.app_context():
     db.create_all()
  
