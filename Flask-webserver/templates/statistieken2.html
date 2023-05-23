@@ -9,9 +9,10 @@
 
 
 {% block content %}
-<form ACTION="/selvak2" METHOD="POST">
-  <select name="vak">
-      <option>Geen vak</option>
+<div class="w-25 p-3" >
+  <form ACTION="/selvak2" METHOD="POST">
+  <select name="vak" class="form-select"  aria-label="Default select example">
+      <option>Vakken</option>
       <optgroup label="2e Bachelor">
           <option>Computerarchitecturen</option>
           <option>Ingenieursbeleving 2</option>
@@ -20,24 +21,27 @@
           <option>Sensoren en Actuatoren</option>
           <option>Ingenieursbeleving 3</option>
       </optgroup>
-  </select>               
+  </select> 
+  <br/>            
   <input type="submit" value="submit" class="btn btn-secondary">
 </form>
-</br>
-  
+</div>
+<br/>
+<h3>{{subject}}</h3>
+
+<div class ='container'><h2 id="verwerken"></h2></div>
 <div>
   <canvas id="myChart"></canvas>
 </div>
 
-<div class="table-container">
-  <table id="mean-table">
+<div class="table-container" id="tabel_geg" style="display: none;">
+  <table class="table table-hover" id="mean-table">
     <thead>
       <tr>
         <th>Naam</th>
         <th>Gemiddelde vraagtijd</th>
         <th>Maximum vraagtijd</th>
         <th>Aantal vragen</th>
-        <th>Vak</th>
       </tr>
     </thead>
     <tbody>
@@ -118,10 +122,13 @@
 
 if (waitlist == null || waitlist.length == 0 || maxCid != names.length) {
     //array does not exist or is empty
-    document.write("<div class ='container'><h2>Nog aan het verwerken...</h2></div>") 
+    document.getElementById("verwerken").innerHTML = "Nog aan het verwerken...";
 }
 
-else{
+else
+{
+
+  document.getElementById("tabel_geg").style.display = "block";
   //console.log([...waitlist])
   //calculates the mean of every cid, by adding up all the times and deviding by the amount of times.
   console.log("print tijd",waitlist[0].time)
@@ -147,14 +154,11 @@ else{
   }
 
   subject = waitlist[0].subject; // het vak opslaan voor in tabel
-  if (!subject) {
-    subject = "Unknown" 
-  }
-
+  
   for (let j = 0; j < names.length; j++) {
         for (let i = 0; i < len_waitlist; i++ ) {
           //console.log("print eeeee", waitlist[i].cid, names.length)
-          if (names[j] == null && !names.includes(waitlist[i].cid) ) { // geen filtervak , naam is CID
+          if (names[j] == null && !names.includes(waitlist[i].cid) ) { // geen naam uit databank kunnen halen, naam is CID
             names[j] = waitlist[i].cid;
             break;
       }
@@ -257,8 +261,8 @@ var tableBody = document.querySelector("#mean-table tbody");
     var maxResCell = row.insertCell();
     maxResCell.textContent = vragen[i];
 
-    var maxResCell = row.insertCell();
-    maxResCell.textContent = subject;
+    /*var maxResCell = row.insertCell();
+    maxResCell.textContent = subject;*/
   }
 }
 

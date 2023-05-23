@@ -47,13 +47,22 @@ def home():
 @app.route("/queue",methods=["GET","POST"])
 def queue():
     if request.method == "POST":
+        
+        if (filtervak[0] == ""): # check of er een vak geselecteerd is
+            return "geen vak geselecteerd"
+            
         cid = request.form["cid"]
+        name_query = db.session.execute(db.select(Klas.name).where(Klas.vak == filtervak[0] and Klas.cid == cid)).scalar()
+        
+        if (not(name_query)): # check of er een naam in databank staat
+            return "geen databank entry"
+        
         pressed = int(request.form["button"])
         subject = filtervak[0]
         add_queue(cid, pressed, user_list, time_list, subject)
         return "succes"
     else:
-        return render_template('queue.html')
+        return render_template('queue.html', subject=filtervak[0])
     
 @app.route("/values", methods=["GET"])
 def get_values():
@@ -73,7 +82,6 @@ def stats():
     if request.method == "GET":
         waitlist=[]
         names = []
-        
         return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"
@@ -151,13 +159,13 @@ def selectvak():
 def selectvak2():
     if request.method == "POST":
 
-        if request.form['vak'] == "Geen vak":
+        if request.form['vak'] == "Vakken":
             filtervak[0] = ""
         else:
             filtervak[0] = str(request.form['vak'])
         
         waitlist = tijden(filtervak[0]) # gaat entries halen die het juist vak bevatten
-        print("zonder filter",waitlist)
+        
         distinct_cid = []
         names = []
     
@@ -168,8 +176,11 @@ def selectvak2():
             names.append(Klas.query.filter_by(cid=int(i), vak=filtervak[0]).with_entities(Klas.name).scalar())
             #print("names: ", names) 
             #print("finaal_names: ", names) 
-
-        return render_template("statistieken2.html",waitlist=waitlist, names=names)
+        
+        if (len(waitlist) == 0): # waneer er geen data is geen subject title
+            filtervak[0] = ""
+            
+        return render_template("statistieken2.html",waitlist=waitlist, names=names, subject=filtervak[0])
         
         # Not working trying to select class en putting it in global var. (so /value can query right class)
         # Need to fix when creating< table -> different tables for every subject
