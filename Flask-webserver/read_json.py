@@ -3,10 +3,10 @@ import os
 
 def tijden(vak):
 
-    if os.stat('Flask-webserver\log_prob.json').st_size == 0:
+    if os.stat('/home/tenzing/Documenten/git/helpende-hand/Flask-webserver/log_prob.json').st_size == 0:
         return
     
-    json_data=open('Flask-webserver\log_prob.json')
+    json_data=open('/home/tenzing/Documenten/git/helpende-hand/Flask-webserver/log_prob.json')
 
     # EERST DE LIJST ORDENEN
 

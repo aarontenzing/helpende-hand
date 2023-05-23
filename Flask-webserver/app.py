@@ -41,9 +41,16 @@ def home():
 @app.route("/queue",methods=["GET","POST"])
 def queue():
     if request.method == "POST":
-        if (filtervak[0] == ""):
+        
+        if (filtervak[0] == ""): # check of er een vak geselecteerd is
             return "geen vak geselecteerd"
+            
         cid = request.form["cid"]
+        name_query = db.session.execute(db.select(Klas.name).where(Klas.vak == filtervak[0] and Klas.cid == cid)).scalar()
+        
+        if (not(name_query)): # check of er een naam in databank staat
+            return "geen databank entry"
+        
         pressed = int(request.form["button"])
         subject = filtervak[0]
         add_queue(cid, pressed, user_list, time_list, subject)
