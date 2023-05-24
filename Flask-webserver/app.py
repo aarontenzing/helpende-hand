@@ -27,7 +27,7 @@ class  Klas(db.Model):
 
 
 class Wachttijd(db.Model):
-    cid = db.Column(db.Integer,db.ForeignKey('klas.id'))
+    cid = db.Column(db.Integer,db.ForeignKey('klas.cid'))
     vak = db.Column(db.String(200),db.ForeignKey('klas.vak'),nullable=False)
     wachttijd = db.Column(db.Integer)
     sessie = db.Column(db.Integer,nullable=False)
@@ -125,7 +125,7 @@ def databank():
     klaslijst = "Lijst met Studentnamen"
 
     if request.method == "POST":
-        if(request.form['subject']!='Kies een vak'):
+        if(request.form['subject']!='Kies een vak' and request.form['name']!=''):
             
             # Bekijk laatste id 
             last_id = db.session.execute(db.select(Klas.cid).where(Klas.vak == request.form['subject'] ).order_by(Klas.cid.desc())).scalar()
@@ -158,6 +158,25 @@ def selectvak():
         # Need to fix when creating< table -> different tables for every subject
         return render_template('queue.html', subject=filtervak[0])
     
+@app.route("/klaslokaal",methods=["POST","GET"])
+def klaslokaal():
+
+    if request.method == "POST":
+        
+        if (filtervak[0] == ""): # check of er een vak geselecteerd is
+            return "geen vak geselecteerd"
+            
+        #cid = request.form["cid"]
+        #pressed = int(request.form["button"])
+        #if pressed == 1 -> joined -> tafel wordt groen
+        #              0    left            terug normaal
+        subject = filtervak[0]
+        return "succes"
+    else:
+        return render_template('klaslokaal.html')
+
+    #return render_template('klaslokaal.html',)
+    
 @app.route("/selvak2",methods=["POST"])
 def selectvak2():
     if request.method == "POST":
@@ -165,7 +184,7 @@ def selectvak2():
         if request.form['vak'] == "Vakken":
             filtervak[0] = ""
         else:
-            filtervak[0] = str(request.form['vak'])
+            filtervak[0] = request.form['vak']
         
         waitlist = tijden(filtervak[0]) # gaat entries halen die het juist vak bevatten
         
@@ -182,7 +201,7 @@ def selectvak2():
         
         if (len(waitlist) == 0): # waneer er geen data is geen subject title
             filtervak[0] = ""
-            
+           
         return render_template("statistieken2.html",waitlist=waitlist, names=names, subject=filtervak[0])
         
         # Not working trying to select class en putting it in global var. (so /value can query right class)
