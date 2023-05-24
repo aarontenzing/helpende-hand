@@ -16,7 +16,7 @@ def add_queue(cid, pressed, user_list, time_list, vak):
             if(cid == user_list[i]):
                 del user_list[i], time_list[i]
                 #playsound("/home/tenzing/Documenten/git/helpende-hand/Flask-webserver/leave.mp3")
-                write({'cid':cid, 'time': strftime("%H:%M:%S"),'entry':'left', 'subject': vak}, '/home/tenzing/Documenten/git/helpende-hand/Flask-webserver/log_prob.json')
+                write({'cid':cid, 'time': strftime("%H:%M:%S"),'entry':'left', 'subject': vak}, '/home/tenzing/Documenten/git/helpende-hand/Flask-webserver/log_prob.json') 
                 return user_list, time_list
     else:
         return "queuelist error"
