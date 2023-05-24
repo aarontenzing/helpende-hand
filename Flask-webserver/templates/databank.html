@@ -2,9 +2,10 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
     <div class ="container">
-
-        <h1>Studenten</h1>
-        <a href="/update" class="btn btn-outline-secondary btn-sm">Update Databank</a>
+        <div  style="display: flex; gap: 220px; flex-wrap: wrap; align-items: flex-end;">
+            <h1>Studenten</h1>
+            <a href="/update" style="height: 30px; align-self: flex-end;" class="btn btn-outline-secondary btn-sm">Update Databank</a>
+        </div>
         <br/>
         <form action="/databank" METHOD="POST">
 
@@ -33,12 +34,12 @@
             </tr>
         </form>
   
-    <br/>
+    <br />
     {% for student in klas %}
         <h4>
             {{ student.cid }} | {{ student.vak }} | {{ student.name }}
         </h4>
     {% endfor %}
     </div>
-    <br><br><br><br>
+    <br /><br /><br /><br />
 {% endblock %}
