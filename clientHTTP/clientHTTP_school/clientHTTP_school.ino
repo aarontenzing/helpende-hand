@@ -1,9 +1,9 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-const char* ssid = "servertje";
-const char* password = "ditismijnservertje";
-const char* serverUrl = "http://192.168.0.240:5000/queue";
+const char* ssid = "Aaron-LAN";
+const char* password = "helpendehand69";
+const char* serverUrl = "http://192.168.0.10:5000/queue";
 
 const int cid = 1;
 const int AANT_SEC = 2;
