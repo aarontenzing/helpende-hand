@@ -4,22 +4,22 @@ import os
 def tijden(vak):
 
     #if os.stat('/home/tenzing/Documenten/git/helpende-hand/Flask-webserver/log_prob.json').st_size == 0:
-    if os.stat('./Flask-webserver/log.json').st_size == 0:
+    if os.stat('./Flask-webserver/log_prob.json').st_size == 0:
 
         return
     
     #json_data=open('/home/tenzing/Documenten/git/helpende-hand/Flask-webserver/log_prob.json')
-    json_data=open('./Flask-webserver/log.json')
+    json_data=open('./Flask-webserver/log_prob.json')
 
 
     # EERST DE LIJST ORDENEN
 
     data=json.load(json_data)
-  
     data=sorted(data, key=lambda item : item["cid"])
-    data=sorted(data, key=lambda item : item["subject"])
+    #data=sorted(data, key=lambda item : item["subject"])
+    #print("dit is de data:",data)
 
-    print(data)
+    #print(data)
     joinlist=[]
     leftlist=[]
     timelist=[]
@@ -50,11 +50,11 @@ def tijden(vak):
 
     waitlist=[]
 
-    #print("Joinlist: ", joinlist)
-    #print("Leftlist :", leftlist)
+    #print("Joinlist: ", len(joinlist))
+    #print("Leftlist :", len(leftlist))
 
     if(len(joinlist)!=len(leftlist)):
-        return waitlist
+         return waitlist
 
     for i in range(len(joinlist)):
         j=0
@@ -64,6 +64,7 @@ def tijden(vak):
 
             newitem = { "cid": joinlist[i]['cid'], "time": time, "subject": joinlist[i]['subject'] }
             waitlist.append(newitem)
+            
 
             del leftlist[j]
 
@@ -78,7 +79,7 @@ def tijden(vak):
                     del leftlist[j]
                 j+=1
 
-    #print("dit is de waitlist",waitlist)
+
 
     tmp = []
     # Wanneer vak geselecteerd is filter op vak
