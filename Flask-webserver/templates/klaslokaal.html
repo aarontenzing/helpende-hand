@@ -7,26 +7,28 @@
     setInterval(function(){
         $.ajax({
         type: "GET",
-        url: "http://192.168.0.144:5000/values", 
+        url: "http://192.168.0.229:5000/values", 
         success: function(data) {
             var event_data = '';
             $.each(data.users, function(index, value){
                 console.log(data);
                 UpdateTafel(value);
-                
+                    
             });
         }
     });
     }, 1000); //Ververs pagina elke 1 seconden
 
+ setInterval(function() {location.reload(); }, 10000);
+
     function UpdateTafel(value){
         //get ElementById -> check of value overeenkomt met één van de plaatsen -> kleur tafel groen
-        for (let i = 1; i <= 24; i++) {
-            var vraagbank = document.getElementById('i');
+        for (let i = 1; i <= 5; i++) {
+            var vraagbank = document.getElementById(String(i));
             if(value == i){
-                
                 vraagbank.setAttribute("fill", "red");
-            }else{
+            }
+            else{
                 vraagbank.setAttribute("fill", "#82cc86");
             }
         } 
@@ -36,48 +38,12 @@
 {% endblock %}
 
 {% block content %}
-<div class="w-25 p-3" >
-    <form ACTION="/selvak" METHOD="POST">
-    <select name="vak" class="form-select"  aria-label="Default select example" style="display:inline-block">
-        <option>Vakken</option>
-        <optgroup label="2e Bachelor">
-            <option>Computerarchitecturen</option>
-            <option>Ingenieursbeleving 2</option>
-        </optgroup>
-        <optgroup label="3e Bachelor">
-            <option>Sensoren en Actuatoren</option>
-            <option>Ingenieursbeleving 3</option>
-        </optgroup>
-    </select>            
-    <input type="submit" value="submit" class="btn btn-secondary" style="display:inline-block">
-</form>
-</div>
-<!--
-<canvas id="canvas" style="background-color: blue"></canvas>
-<script>
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    //ctx.fillStyle = "blue";
-    //Canvas waarden
-    //canvas.width = window.innerWidth;
-    canvas.width = window.innerWidth - 250;
-    canvas.height = window.innerHeight - 100;
 
-    ctx.beginPath();
-    //rij 1
-    ctx.rect(80, 50, 80, 80);
-    ctx.rect(80, 50, 80, 80);
-
-    ctx.stroke();
-
-</script>
--->
 <style>
     svg {
       background-color: #f5f5f5;
     }
     rect {
-      fill: #82cc86;
       stroke: #333333;
       stroke-width: 2;
     }
@@ -85,32 +51,32 @@
 
 <svg width="320" height="300">
     <!-- First Column -->
-    <rect id='1' x="10" y="10" width="50" height="50" />
-    <rect x="10" y="60" width="50" height="50" />
-    <rect x="10" y="110" width="50" height="50" />
-    <rect x="10" y="160" width="50" height="50" />
-    <rect x="10" y="210" width="50" height="50" />
+    <rect id='1' x="10" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect id='2' x="10" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect id='3' x="10" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect id='4' x="10" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect id='5' x="10" y="210" width="50" height="50" fill="#82cc86"/>
 
     <!-- Second Column -->
-    <rect x="90" y="10" width="50" height="50" />
-    <rect x="90" y="60" width="50" height="50" />
-    <rect x="90" y="110" width="50" height="50" />
-    <rect x="90" y="160" width="50" height="50" />
-    <rect x="90" y="210" width="50" height="50" />
+    <rect x="90" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="210" width="50" height="50" fill="#82cc86"/>
 
     <!-- Third Column -->
-    <rect x="170" y="10" width="50" height="50" />
-    <rect x="170" y="60" width="50" height="50" />
-    <rect x="170" y="110" width="50" height="50" />
-    <rect x="170" y="160" width="50" height="50" />
-    <rect x="170" y="210" width="50" height="50" />
+    <rect x="170" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="210" width="50" height="50" fill="#82cc86"/>
 
     <!-- Fourth Column -->
-    <rect x="250" y="10" width="50" height="50" />
-    <rect x="250" y="60" width="50" height="50" />
-    <rect x="250" y="110" width="50" height="50" />
-    <rect x="250" y="160" width="50" height="50" />
-    <rect x="250" y="210" width="50" height="50" />
+    <rect x="250" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="210" width="50" height="50" fill="#82cc86"/>
   </svg>
   
 <br /><br /><br /><br />
