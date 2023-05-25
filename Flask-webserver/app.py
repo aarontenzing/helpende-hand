@@ -27,7 +27,7 @@ class  Klas(db.Model):
 
 
 class Wachttijd(db.Model):
-    cid = db.Column(db.Integer,db.ForeignKey('klas.id'))
+    cid = db.Column(db.Integer,db.ForeignKey('klas.cid'))
     vak = db.Column(db.String(200),db.ForeignKey('klas.vak'),nullable=False)
     wachttijd = db.Column(db.Integer)
     sessie = db.Column(db.Integer,nullable=False)
@@ -41,12 +41,14 @@ user_list = []
 time_list = []
 waitlist= []
 
-filtervak = [""]
+filtervak = ["",""]
+
 
 @app.route("/")
 def home():
     return render_template("home.html")
 
+# PAGINA DIE POST REQUEST ONTVANGT VAN BUTTON
 @app.route("/queue",methods=["GET","POST"])
 def queue():
     if request.method == "POST":
@@ -55,7 +57,7 @@ def queue():
             return "geen vak geselecteerd"
             
         cid = request.form["cid"]
-        name_query = db.session.execute(db.select(Klas.name).where(Klas.vak == filtervak[0] and Klas.cid == cid)).scalar()
+        name_query = db.session.execute(db.select(Klas.name).where(Klas.vak == filtervak[0] and Klas.cid == cid)).scalar() # query voor name uit db
         
         if (not(name_query)): # check of er een naam in databank staat
             return "geen databank entry"
@@ -66,20 +68,21 @@ def queue():
         return "succes"
     else:
         return render_template('queue.html', subject=filtervak[0])
-    
+
+# API VOOR DATA IN JSON FORMAAT TE KRIJGEN    
 @app.route("/values", methods=["GET"])
 def get_values():
     if request.method == "GET":
         names = []
         for i in user_list:
             names.append(Klas.query.filter_by(cid=i, vak=filtervak[0]).with_entities(Klas.name).scalar())
-        print(names)
         #querying student name from the database, if no entry NULL
         data = {'users':user_list, 'time':time_list, 'names':names}
         return jsonify(data)
     else:
         return "Not allowed"
-    
+
+# STATISTIEKEN 
 @app.route("/stats",methods=["GET"])
 def stats():
     if request.method == "GET":
@@ -88,7 +91,8 @@ def stats():
         return render_template("statistieken2.html",waitlist=waitlist, names=names)
     else:
         return "Nothing"
-    
+
+# UPDATEN VAN DATABANK 
 @app.route('/update',methods=["POST","GET"])
 def update():
     if request.method == "GET":
@@ -101,9 +105,9 @@ def update():
         update_student_vak= request.form.getlist('vak')
         update_student_naam = request.form.getlist('naam')
 
-        print("lijst met cids:" ,update_student_cid)
-        print("lijst met vak:" ,update_student_vak)
-        print("lijst met naam:" ,update_student_naam)
+        #print("lijst met cids:" ,update_student_cid)
+        #print("lijst met vak:" ,update_student_vak)
+        #print("lijst met naam:" ,update_student_naam)
 
         #db.session.drop(Klas)
         Klas.__table__.drop(db.engine)
@@ -125,7 +129,7 @@ def databank():
     klaslijst = "Lijst met Studentnamen"
 
     if request.method == "POST":
-        if(request.form['subject']!='Kies een vak'):
+        if(request.form['subject']!='Kies een vak' and request.form['name']!=''):
             
             # Bekijk laatste id 
             last_id = db.session.execute(db.select(Klas.cid).where(Klas.vak == request.form['subject'] ).order_by(Klas.cid.desc())).scalar()
@@ -145,6 +149,7 @@ def databank():
         studenten = db.session.execute(db.select(Klas).order_by(Klas.vak,Klas.cid)).scalars()
         return render_template("databank.html",title=klaslijst,klas=studenten)
 
+# SELECTEER VAK OP QUEUE PAGINA 
 @app.route("/selvak",methods=["POST"])
 def selectvak():
     if request.method == "POST":
@@ -158,16 +163,35 @@ def selectvak():
         # Need to fix when creating< table -> different tables for every subject
         return render_template('queue.html', subject=filtervak[0])
     
+@app.route("/klaslokaal",methods=["POST","GET"])
+def klaslokaal():
+
+    if request.method == "POST":
+        
+        if (filtervak[0] == ""): # check of er een vak geselecteerd is
+            return "geen vak geselecteerd"
+            
+        #cid = request.form["cid"]
+        #pressed = int(request.form["button"])
+        #if pressed == 1 -> joined -> tafel wordt groen
+        #              0    left            terug normaal
+        subject = filtervak[0]
+        return "succes"
+    else:
+        return render_template('klaslokaal.html')
+
+    #return render_template('klaslokaal.html',)
+    
 @app.route("/selvak2",methods=["POST"])
 def selectvak2():
     if request.method == "POST":
 
         if request.form['vak'] == "Vakken":
-            filtervak[0] = ""
+            filtervak[1] = ""
         else:
-            filtervak[0] = str(request.form['vak'])
+            filtervak[1] = str(request.form['vak'])
         
-        waitlist = tijden(filtervak[0]) # gaat entries halen die het juist vak bevatten
+        waitlist = tijden(filtervak[1]) # gaat entries halen die het juist vak bevatten
         
         distinct_cid = []
         names = []
@@ -175,18 +199,12 @@ def selectvak2():
         distinct_cid= list(set(unique['cid'] for unique in waitlist))
         
         for i in distinct_cid:
-            #print("uniek cid: ", i)
-            names.append(Klas.query.filter_by(cid=int(i), vak=filtervak[0]).with_entities(Klas.name).scalar())
-            #print("names: ", names) 
-            #print("finaal_names: ", names) 
+            names.append(Klas.query.filter_by(cid=int(i), vak=filtervak[1]).with_entities(Klas.name).scalar())
         
         if (len(waitlist) == 0): # waneer er geen data is geen subject title
-            filtervak[0] = ""
+            filtervak[1] = "" 
             
-        return render_template("statistieken2.html",waitlist=waitlist, names=names, subject=filtervak[0])
-        
-        # Not working trying to select class en putting it in global var. (so /value can query right class)
-        # Need to fix when creating< table -> different tables for every subject
+        return render_template("statistieken2.html",waitlist=waitlist, names=names, subject=filtervak[1])
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

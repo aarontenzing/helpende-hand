@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Klaslokaal{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script> 
+    setInterval(function(){
+        $.ajax({
+        type: "GET",
+        url: "http://192.168.0.229:5000/values", 
+        success: function(data) {
+            var event_data = '';
+            $.each(data.users, function(index, value){
+                console.log(data);
+                UpdateTafel(value);
+                    
+            });
+        }
+    });
+    }, 1000); //Ververs pagina elke 1 seconden
+
+ setInterval(function() {location.reload(); }, 10000);
+
+    function UpdateTafel(value){
+        //get ElementById -> check of value overeenkomt met één van de plaatsen -> kleur tafel groen
+        for (let i = 1; i <= 5; i++) {
+            var vraagbank = document.getElementById(String(i));
+            if(value == i){
+                vraagbank.setAttribute("fill", "red");
+            }
+            else{
+                vraagbank.setAttribute("fill", "#82cc86");
+            }
+        } 
+    }
+
+    </script>
+{% endblock %}
+
+{% block content %}
+
+<style>
+    svg {
+      background-color: #f5f5f5;
+    }
+    rect {
+      stroke: #333333;
+      stroke-width: 2;
+    }
+</style>
+
+<svg width="320" height="300">
+    <!-- First Column -->
+    <rect id='1' x="10" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect id='2' x="10" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect id='3' x="10" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect id='4' x="10" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect id='5' x="10" y="210" width="50" height="50" fill="#82cc86"/>
+
+    <!-- Second Column -->
+    <rect x="90" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="210" width="50" height="50" fill="#82cc86"/>
+
+    <!-- Third Column -->
+    <rect x="170" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="210" width="50" height="50" fill="#82cc86"/>
+
+    <!-- Fourth Column -->
+    <rect x="250" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="210" width="50" height="50" fill="#82cc86"/>
+  </svg>
+  
+<br /><br /><br /><br />
+{% endblock %}
+
+
+
