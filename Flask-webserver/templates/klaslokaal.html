@@ -4,10 +4,11 @@
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script> 
+    
     setInterval(function(){
         $.ajax({
         type: "GET",
-        url: "http://192.168.0.144:5000/values", 
+        url: "http://192.168.0.105:5000/values", 
         success: function(data) {
             var event_data = '';
             $.each(data.users, function(index, value){
@@ -18,11 +19,15 @@
         }
     });
     }, 1000); //Ververs pagina elke 1 seconden
-
+    
+    setInterval(function(){
+        location.reload();
+    }, 5000);
+    
     function UpdateTafel(value){
         //get ElementById -> check of value overeenkomt met één van de plaatsen -> kleur tafel groen
         for (let i = 1; i <= 24; i++) {
-            var vraagbank = document.getElementById('i');
+            var vraagbank = document.getElementById(String(i));
             if(value == i){
                 
                 vraagbank.setAttribute("fill", "red");
@@ -31,88 +36,125 @@
             }
         } 
     }
-
+    
+    //document.getElementById('cid1').setAttribute("fill", "red"); 
     </script>
 {% endblock %}
 
 {% block content %}
 <div class="w-25 p-3" >
-    <form ACTION="/selvak" METHOD="POST">
-    <select name="vak" class="form-select"  aria-label="Default select example" style="display:inline-block">
-        <option>Vakken</option>
-        <optgroup label="2e Bachelor">
-            <option>Computerarchitecturen</option>
-            <option>Ingenieursbeleving 2</option>
-        </optgroup>
-        <optgroup label="3e Bachelor">
-            <option>Sensoren en Actuatoren</option>
-            <option>Ingenieursbeleving 3</option>
-        </optgroup>
-    </select>            
-    <input type="submit" value="submit" class="btn btn-secondary" style="display:inline-block">
-</form>
+    <select id="klaslokaal" onchange="TekenPlattegrond()">
+        <option>Kies een lokaal</option>
+        <option value="C106">C106</option>
+        <option value="A212">A212</option>
+        <option value="A213">A213</option>
+        <option value="A217">A217</option>
+    </select>
 </div>
-<!--
-<canvas id="canvas" style="background-color: blue"></canvas>
-<script>
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    //ctx.fillStyle = "blue";
-    //Canvas waarden
-    //canvas.width = window.innerWidth;
-    canvas.width = window.innerWidth - 250;
-    canvas.height = window.innerHeight - 100;
 
-    ctx.beginPath();
-    //rij 1
-    ctx.rect(80, 50, 80, 80);
-    ctx.rect(80, 50, 80, 80);
-
-    ctx.stroke();
-
-</script>
--->
 <style>
     svg {
       background-color: #f5f5f5;
     }
     rect {
-      fill: #82cc86;
+      
       stroke: #333333;
       stroke-width: 2;
     }
 </style>
 
-<svg width="320" height="300">
-    <!-- First Column -->
-    <rect id='1' x="10" y="10" width="50" height="50" />
-    <rect x="10" y="60" width="50" height="50" />
-    <rect x="10" y="110" width="50" height="50" />
-    <rect x="10" y="160" width="50" height="50" />
-    <rect x="10" y="210" width="50" height="50" />
 
-    <!-- Second Column -->
-    <rect x="90" y="10" width="50" height="50" />
-    <rect x="90" y="60" width="50" height="50" />
-    <rect x="90" y="110" width="50" height="50" />
-    <rect x="90" y="160" width="50" height="50" />
-    <rect x="90" y="210" width="50" height="50" />
 
-    <!-- Third Column -->
-    <rect x="170" y="10" width="50" height="50" />
-    <rect x="170" y="60" width="50" height="50" />
-    <rect x="170" y="110" width="50" height="50" />
-    <rect x="170" y="160" width="50" height="50" />
-    <rect x="170" y="210" width="50" height="50" />
+<svg id='nieuwsvg' width="320" height="400">
+    <!--
+    <rect id='cid1' x="10" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="10" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="10" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="10" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="10" y="210" width="50" height="50" fill="#82cc86"/>
+    <rect x="10" y="260" width="50" height="50" fill="#82cc86"/>
 
-    <!-- Fourth Column -->
-    <rect x="250" y="10" width="50" height="50" />
-    <rect x="250" y="60" width="50" height="50" />
-    <rect x="250" y="110" width="50" height="50" />
-    <rect x="250" y="160" width="50" height="50" />
-    <rect x="250" y="210" width="50" height="50" />
+
+    <rect x="90" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="210" width="50" height="50" fill="#82cc86"/>
+    <rect x="90" y="260" width="50" height="50" fill="#82cc86"/>
+
+
+    <rect x="170" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="210" width="50" height="50" fill="#82cc86"/>
+    <rect x="170" y="260" width="50" height="50" fill="#82cc86"/>
+
+
+    <rect x="250" y="10" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="60" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="110" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="160" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="210" width="50" height="50" fill="#82cc86"/>
+    <rect x="250" y="260" width="50" height="50" fill="#82cc86"/>
+
+    -->
   </svg>
-  
+
+<script>
+
+    //var urlParams = new URLSearchParams(window.location.search);
+    //var saved_option = urlParams.get("option_select");
+    var option_select = document.getElementById("klaslokaal");
+    var saved_option = localStorage.getItem("klaslokaal");
+    
+    if(saved_option){
+        option_select.value = saved_option;
+    }
+    
+
+    function TekenPlattegrond() {
+        
+        var plattegrond = klaslokaal.value;
+        var rectHTML = '';
+
+        if (plattegrond == "C106") {
+            
+            for (var i = 0; i < 4; i++) { //kolommen
+                for (var j = 0; j < 6; j++) { //rijen
+                    var index = (1+j)+6*i;
+                    var x = 10 + 80*i;
+                    var y = 10 + 50*j;
+                    rectHTML += `<rect id="${index}" + x="${x}" + y=${y} width="50" height="50" fill="#82cc86"/>`
+                    
+                }
+            }
+            document.getElementById('nieuwsvg').innerHTML = rectHTML;
+
+        } else if (plattegrond == "A217") {
+            document.getElementById('nieuwsvg').innerHTML = '';
+            document.getElementById('nieuwsvg').setAttribute("width", "600");
+            for (var i = 0; i < 5; i++) { //kolommen
+                for (var j = 0; j < 3; j++) { //rijen
+                    var index = (1+j)+3*i;
+                    var x = 10 + 80*i;
+                    var y = 10 + 60*j;
+                    rectHTML += `<rect id="${index}" + x="${x}" + y=${y} width="50" height="50" fill="#82cc86"/>`
+                    
+                }
+            }
+            document.getElementById('nieuwsvg').innerHTML = rectHTML;
+        }
+
+            svgContainer.appendChild(svg);
+
+
+        var saved_option = option_select.value;
+        localStorage.setItem("klaslokaal",saved_option);
+    }
+    
+</script>
+
 <br /><br /><br /><br />
 {% endblock %}
 
