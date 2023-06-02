@@ -3,7 +3,7 @@
 
 const char* ssid = "Aaron-LAN";
 const char* password = "helpendehand69";
-const char* serverUrl = "http://192.168.0.10:5000/queue";
+const char* serverUrl = "http://192.168.0.100:5000/queue";
 
 const int cid = 1;
 const int AANT_SEC = 2;

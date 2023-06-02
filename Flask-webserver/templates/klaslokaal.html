@@ -8,13 +8,13 @@
     setInterval(function(){
         $.ajax({
         type: "GET",
-        url: "http://192.168.0.105:5000/values", 
+        url: "http://192.168.0.229:5000/values", 
         success: function(data) {
             var event_data = '';
             $.each(data.users, function(index, value){
                 console.log(data);
                 UpdateTafel(value);
-                
+                    
             });
         }
     });
@@ -29,9 +29,9 @@
         for (let i = 1; i <= 24; i++) {
             var vraagbank = document.getElementById(String(i));
             if(value == i){
-                
                 vraagbank.setAttribute("fill", "red");
-            }else{
+            }
+            else{
                 vraagbank.setAttribute("fill", "#82cc86");
             }
         } 

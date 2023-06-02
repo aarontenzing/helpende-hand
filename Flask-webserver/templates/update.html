@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    <div class ="container">
-
+    <div class="container">
         <h1>Overzicht databank</h1>
-        <form action="/update" METHOD="POST">
-
-            <table cellspacing ="10">
+        <form action="/update" method="POST" onsubmit="return validateForm()">
+            <table cellspacing="10">
                 <tr>
                     <th>ID</th>
                     <th>Vak</th>
@@ -17,16 +15,44 @@
                     <td><textarea name="cid" rows="1" cols="2">{{ student.cid }}</textarea></td>
                     <td><textarea name="vak" rows="1" cols="20">{{ student.vak }}</textarea></td>
                     <td><textarea name="naam" rows="1" cols="20">{{ student.name }}</textarea></td>
+                    <td><button type="button" class="btn btn-secondary" onclick="clearTextareas(this)">Verwijder</button></td>
                 </tr>
                 {% endfor %}
-
             </table>
-
             <input type="submit" value="Pas Aan" class="btn btn-secondary">
         </form>
-  
-    <br/>
-    
     </div>
-    <br><br><br><br>
+
+    <script>
+        function validateForm() {
+            var rows = document.getElementsByTagName('tr');
+
+            for (var i = 0; i < rows.length; i++) {
+                var textareas = rows[i].getElementsByTagName('textarea');
+                var emptyCount = 0;
+
+                for (var j = 0; j < textareas.length; j++) {
+                    if (textareas[j].value === '') {
+                        emptyCount++;
+                    }
+                }
+
+                if (emptyCount !== 0 && emptyCount !== textareas.length) {
+                    alert('One or more textareas in a row are empty');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function clearTextareas(button) {
+            var row = button.parentNode.parentNode;
+            var textareas = row.getElementsByTagName('textarea');
+
+            for (var i = 0; i < textareas.length; i++) {
+                textareas[i].value = '';
+            }
+        }
+    </script>
 {% endblock %}
